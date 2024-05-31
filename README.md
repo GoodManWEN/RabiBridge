@@ -8,7 +8,7 @@ This is a lightweight RPC framework based on RabbitMQ, designed to achieve netwo
 - [Quick Start](#Quick-Start)
 - [Documentation](#Documentation)
 - [Configuration](#Configuration)
-- [Benchmark](#Contribute)
+- [Performance](#Performance)
 - [Licence](#Licence)
 
 ## Feature
@@ -111,7 +111,7 @@ COMPRESS_THRESHOLD = 1024                      # Stream compression algorithm wi
 SECRET = "your secret that no one knows"       # Avoid being known by anyone.
 ```
 
-## Benchmark
+## Performance
 
 ![](https://github.com/GoodManWEN/RabiBridge/blob/main/misc/echo-performance-with-number-of-cpu-cores.png?raw=true)
 
