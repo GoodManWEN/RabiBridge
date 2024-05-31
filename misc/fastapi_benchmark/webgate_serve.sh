@@ -1,0 +1,1 @@
+gunicorn app:app -k uvicorn.workers.UvicornWorker -c fastapi_conf.py
