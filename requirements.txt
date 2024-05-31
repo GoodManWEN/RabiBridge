@@ -1,0 +1,10 @@
+uvicorn[standard]
+fastapi
+zstandard 
+aio_pika 
+psutil 
+loguru 
+uvloop 
+pipeit 
+toml 
+cryptography
