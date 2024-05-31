@@ -1,10 +1,20 @@
 # Production deployment example
 
+
+
+
+
 ## Service Nodes:
 
 - Use the configuration file instead of passing in parameters.
 - Use multiprocessing assistance tools to take advantage of multiple cores CPU. For its details, it is recommended to refer directly to the source code.
 - To reduce programming errors, it is recommended to use the `try_call` api for execution rather than the `__getattr__` to catch unknown calls, although this may seem more naturally logica
+
+### Threading Model
+
+- Each core executes only one process, and processes communicate with each other using shared memory. 
+- Each process uses only one thread and uses IO multiplexing to handle concurrent connections within threads.
+- Probably the most efficient implementation of network models in Python today.
 
 ```python
 from rabibridge import RMQServer, register_call, multiprocess_spawn_helper

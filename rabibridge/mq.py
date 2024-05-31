@@ -147,7 +147,7 @@ class RMQClient(RMQBase):
         ftype: Literal['async', 'sync'] = 'async',
         *, 
         timeout: Optional[float] = None
-    ) -> Any:
+    ) -> Tuple[int, Any]:
         '''
         Note:
             The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
@@ -201,10 +201,10 @@ class RMQClient(RMQBase):
             where success means if the call successfully returns, while err_code means if the call run smoothly on remote side, 0 for success, 1 for error.
         '''
         try:
-            res = await self.call_async(func_name, args, kwargs, ftype, timeout=timeout)
+            res: Tuple[int, Any] = await self.call_async(func_name, args, kwargs, ftype, timeout=timeout)
             return True, res
         except Exception as e:
-            return False, e
+            return False, [1, e]
 
 
     async def close(self):
@@ -334,7 +334,7 @@ class RMQServer(RMQBase):
                 if message.reply_to is None:
                     raise ValueError("Reply_to queue is None")
                 args, kwargs = self._stream_decompress(message.body)
-                logger.trace(f"Received message: {args}, {kwargs}, cid: {message.correlation_id}, reply_to: {message.reply_to}")
+                logger.debug(f"Received message: {args}, {kwargs}, cid: {message.correlation_id}, reply_to: {message.reply_to}")
                 call_code: int = 0 
                 try:
                     if is_async_function:
@@ -349,7 +349,7 @@ class RMQServer(RMQBase):
                     ret_body = self._stream_compress([call_code, result])
                 else:
                     err_msg = trace_exception(e)
-                    logger.trace(f"Run error: {err_msg}")
+                    logger.debug(f"Run error: {err_msg}")
                     ret_body = self._stream_compress([call_code, err_msg])
                 await channel.default_exchange.publish(
                     aio_pika.Message(
