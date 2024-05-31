@@ -31,9 +31,18 @@ def get_config_val(config: dict, k1: str, k2: str) -> Any:
 
 @validate_call
 def decode_pwd(cipher: Optional[str], secret: Optional[str], decrypt_function: Callable[[bytes, bytes], bytes]) -> Optional[str]:
-    if cipher is None or secret is None:
+    try:
+        if cipher is None or secret is None:
+            return None
+        return b64decode(decrypt_function(b64decode(cipher.encode('utf-8')), b64encode(secret.encode('utf-8')))).decode('utf-8')
+    except Exception as e:
+        raise ValueError("Failed to decode cipher.")
+    
+@validate_call
+def encode_pwd(pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) -> Optional[str]:
+    if pwd is None or secret is None:
         return None
-    return b64decode(decrypt_function(b64decode(cipher.encode('utf-8')), b64encode(secret.encode('utf-8')))).decode('utf-8')
+    return b64encode(encrypt_function(b64encode(pwd.encode('utf-8')), b64encode(secret.encode('utf-8')))).decode('utf-8')
 
 @validate_call
 def list_main_functions(global_symbols: dict[str, object], banned_names: list[str] = []) -> Generator[Tuple[str, str, object], None, None]:
