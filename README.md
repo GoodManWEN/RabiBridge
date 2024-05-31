@@ -16,6 +16,8 @@ This is a lightweight RPC framework based on RabbitMQ, designed to achieve netwo
 - Low Latency
 - Distributed services and horizontal scaling
 - Fully asynchronous framework
+- Connections ensured by tls
+- Stable under extensive stress testing
 
 ## Dependency
 - Python 3.x
@@ -82,7 +84,7 @@ asyncio.run(main())
 
 For the detailed function description, please refer to the [API reference]().
 
-[Production deployment example]()
+[Production deployment example](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/production_deployment_example.md)
 
 [Encryption in configuration file]()
 
