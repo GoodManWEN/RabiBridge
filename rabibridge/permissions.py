@@ -4,8 +4,7 @@ from cryptography.hazmat.primitives import padding
 from functools import partial 
 import hashlib
 
-from .utils import encode_pwd as encode_pwdu
-from .utils import decode_pwd as decode_pwdu
+from .utils import encode_pwd, decode_pwd
 
 def aes_encryption(plaintext: bytes, secret: bytes) -> bytes:
     _h = hashlib.sha512(secret).digest()
@@ -30,5 +29,5 @@ def aes_decryption(ciphertext: bytes, secret: bytes) -> bytes:
     plaintext = unpadder.update(padded_plaintext) + unpadder.finalize()
     return plaintext
 
-encode_pwd = partial(encode_pwdu, encrypt_function=aes_encryption)
-decode_pwd = partial(decode_pwdu, decrypt_function=aes_decryption)
+encrypt_pwd = partial(encode_pwd, encrypt_function=aes_encryption)
+decrypt_pwd = partial(decode_pwd, decrypt_function=aes_decryption)

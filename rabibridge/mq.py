@@ -10,14 +10,14 @@ from typing import Optional, Literal, Any, Callable, Tuple
 from pydantic import validate_call
 
 from .utils import logger, trace_exception, load_config, get_config_val, list_main_functions
-from .permissions import decode_pwd
+from .permissions import decrypt_pwd
 from .models import ServiceSchema
 
 CONFIG = load_config()
 RABBITMQ_HOST: Optional[str] = get_config_val(CONFIG, "rabbitmq", "RABBITMQ_HOST")
 RABBITMQ_PORT: Optional[int] = get_config_val(CONFIG, "rabbitmq", "RABBITMQ_PORT")
 RABBITMQ_USERNAME: Optional[str] = get_config_val(CONFIG, "rabbitmq", "RABBITMQ_USERNAME")
-RABBITMQ_PASSWORD: Optional[str] = decode_pwd(get_config_val(CONFIG, "rabbitmq", "RABBITMQ_PASSWORD"), CONFIG["secret"]["SECRET"])
+RABBITMQ_PASSWORD: Optional[str] = decrypt_pwd(get_config_val(CONFIG, "rabbitmq", "RABBITMQ_PASSWORD"), CONFIG["secret"]["SECRET"])
 CID_MAX: Optional[int] = get_config_val(CONFIG, "app", "CID_MAX")
 COMPRESS_THRESHOLD: Optional[int] = get_config_val(CONFIG, "app", "COMPRESS_THRESHOLD")
 DEBUG_MODE: Optional[bool] = get_config_val(CONFIG, "app", "DEBUG_MODE")
