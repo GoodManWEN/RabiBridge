@@ -3,7 +3,8 @@
 ## Service Nodes:
 
 - Use the configuration file instead of passing in parameters.
-- Use multiprocessing assistance tools to take advantage of multiple cores CPU.
+- Use multiprocessing assistance tools to take advantage of multiple cores CPU. For its details, it is recommended to refer directly to the source code.
+- To reduce programming errors, it is recommended to use the `try_call` api for execution rather than the `__getattr__` to catch unknown calls, although this may seem more naturally logica
 
 ```python
 from rabibridge import RMQServer, register_call, multiprocess_spawn_helper
