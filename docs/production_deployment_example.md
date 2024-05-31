@@ -77,7 +77,7 @@ async def home():
 
 @app.get("/add")
 async def call_add(a: int, b: int):
-    success, (err_code, res) = await bridge.try_call_async('add', (a, b), ftype="async", timeout=10)
+    success, (err_code, res) = await bridge.try_remote_call('add', (a, b), ftype="async", timeout=10)
     if success and err_code == 0:
         return res
     return HTTPException(status_code=500, detail="Error")
@@ -114,7 +114,7 @@ async def call_add(request):
         b = int(request.query.get('b', None))
     except ValueError:
         raise web.HTTPBadRequest(reason="Invalid parameters")
-    success, (err_code, res) = await bridge.try_call_async('add', (a, b), ftype="async", timeout=10)
+    success, (err_code, res) = await bridge.try_remote_call('add', (a, b), ftype="async", timeout=10)
     if success and err_code == 0:
         return web.Response(text=res)
     raise web.HTTPBadRequest(reason="Invalid parameters")
