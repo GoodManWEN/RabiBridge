@@ -84,27 +84,29 @@ For the detailed function description, please refer to the [API reference]().
 
 [Production deployment example]()
 
+[Encryption in configuration file]()
+
 ## Configuration
 
 For production and other needs,  to achieve higher convenience and stronger security, it is recommended to use configuration files instead of passing parameters. The configuration file options are as follows:
 
 ```toml
 [rabbitmq]      
-RABBITMQ_HOST = 'localhost'                     # RabbitMQ configuration info, same below.
+RABBITMQ_HOST = 'localhost'                    # RabbitMQ configuration info, same below.
 RABBITMQ_PORT = 5672
 RABBITMQ_USERNAME = "admin"
-RABBITMQ_PASSWORD = "fMgmG7+ooAYLjXdPnhInjQ=="
+RABBITMQ_PASSWORD = "fMgmG7+ooAYLjXdPnhInjQ==" # AES Encrypted, check "Encryption in configuration file"
 
 [app]
-DEBUG_MODE = false                              # Whether to run in Debug mode.
-CID_MAX = 1073741824                            # The maximum value of the independent ID assigned by 
-                                                # the client for each message, which should not be 
-                                                # too small or too large.
-COMPRESS_THRESHOLD = 1024                       # Stream compression algorithm will be enabled when 
-                                                # the message size exceeds this byte threshold.
+DEBUG_MODE = false                             # Whether to run in Debug mode.
+CID_MAX = 1073741824                           # The maximum value of the independent ID assigned by 
+                                               # the client for each message, which should not be 
+                                               # too small or too large.
+COMPRESS_THRESHOLD = 1024                      # Stream compression algorithm will be enabled when 
+                                               # the message size exceeds this byte threshold.
 
 [secret]
-SECRET = "your secret that no one knows"        # Avoid being known by anyone.
+SECRET = "your secret that no one knows"       # Avoid being known by anyone.
 ```
 
 ## Benchmark
