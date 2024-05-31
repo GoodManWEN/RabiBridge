@@ -5,18 +5,21 @@ import numpy as np
 from typing import Optional, Callable, Any
 from multiprocessing import Process, shared_memory
 import time
+from collections import deque
 try:
     import uvloop
     uvloop.install()
 except:
     ...
 
-THREAD_NUM = 64
+THREAD_NUM = 192
 
 async def update_shared_array(pidx, shared_array, total_counts):
+    last_sum = 0
     while True:
         await asyncio.sleep(0.25)
-        shared_array[pidx] += total_counts[0]
+        shared_array[pidx] += total_counts[0] - last_sum
+        last_sum = total_counts[0]
 
 async def async_thread(bridge, total_counts):
     async with bridge:
@@ -69,12 +72,18 @@ def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Call
 
     try:
         time_0 = time.time()
+        time_list = deque()
         last_r = 0
+        count = 0
         while True:
+            count += 1
             time.sleep(1)
             time_now = time.time()
             r = np.sum(shared_array)
-            logger.info(f'Total Counts: {r}, QPS: {round((r-last_r)/(time_now-time_0), 2)}/s')
+            time_list.append(r-last_r)
+            if len(time_list) >= 30:
+                time_list.popleft()
+            logger.info(f'Total Counts: {r}, QPS: {round(sum(time_list)/len(time_list), 2)}/s, {count}')
             last_r = r
     except KeyboardInterrupt:
         for p in processes:
