@@ -111,7 +111,19 @@ SECRET = "your secret that no one knows"       # Avoid being known by anyone.
 
 ## Benchmark
 
-TBD
+![](https://github.com/GoodManWEN/RabiBridge/blob/main/misc/echo-performance-with-number-of-cpu-cores.png?raw=true)
+
+Testing platform: 
+```
+CPU Model            : Intel(R) Xeon(R) Platinum 8369B CPU @ 2.70GHz
+CPU Cores            : 16 Cores 2699.998 MHz x86_64
+CPU Cache            : L2 1280K & L3 49152K
+OS                   : Ubuntu 22.04.4 LTS (64 Bit) KVM
+Kernel               : 5.15.0-106-generic
+Total RAM            : 950 MB / 30663 MB (4646 MB Buff)
+Location             : San Jose / US
+Region               : California
+```
 
 ## Licence
 The MIT License
