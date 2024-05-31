@@ -139,7 +139,7 @@ class RMQClient(RMQBase):
             return
         future.set_result(message.body)
 
-    async def call_async(
+    async def remote_call(
         self, 
         func_name: str, 
         args: tuple[Any] = (), 
@@ -186,7 +186,7 @@ class RMQClient(RMQBase):
             logger.trace(f"Result: {res}, cid: {correlation_id}")
             return res
         
-    async def try_call_async(
+    async def try_remote_call(
         self, 
         func_name: str, 
         args: tuple[Any] = (), 
@@ -201,7 +201,7 @@ class RMQClient(RMQBase):
             where success means if the call successfully returns, while err_code means if the call run smoothly on remote side, 0 for success, 1 for error.
         '''
         try:
-            res: Tuple[int, Any] = await self.call_async(func_name, args, kwargs, ftype, timeout=timeout)
+            res: Tuple[int, Any] = await self.remote_call(func_name, args, kwargs, ftype, timeout=timeout)
             return True, res
         except Exception as e:
             return False, [1, e]
