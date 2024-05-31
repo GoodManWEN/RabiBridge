@@ -55,7 +55,7 @@ async def fibonacci(n: int):
 
 async def main():
     bridge = RMQServer(host="localhost", port=5672, username="admin", password="123456")
-    bridge.load_services(globals())             # Automatic capture procedure of the main namespace
+    bridge.load_services(globals()) # Automatic capture procedure of the main namespace
     async with bridge:
         await bridge.run_serve()
 
