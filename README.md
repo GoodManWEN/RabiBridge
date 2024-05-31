@@ -40,9 +40,6 @@ docker run -d \
 
 2. Import `RabiBridge`, create a function to call, register and run serve.
 ```python
-# -*- coding: utf-8 -*-
-# File name: services.py
-
 import asyncio
 from rabibridge import RMQServer, register_call
 
@@ -52,7 +49,7 @@ async def fibonacci(n: int):
         return 0
     elif n == 1:
         return 1
-    return fibonacci(n-1) + fibonacci(n-2)
+    return await fibonacci(n-1) + await fibonacci(n-2)
 
 async def main():
     bridge = RMQServer(host="localhost", port=5672, username="admin", password="123456")
@@ -73,9 +70,9 @@ from rabibridge import RMQClient
 async def main():
     bridge = RMQClient(host="localhost", port=5672, username="admin", password="123456")
     async with bridge:
-        result = await bridge.call_async('fibonacci', (10, ))
+        err_code, result = await bridge.call_async('fibonacci', (10, ))
         print(f"Result is {result}")
-        # >>> 
+        # >>> Result is 55
 
 asyncio.run(main())
 ```
