@@ -18,7 +18,17 @@ logger.add(sys.stdout, level='TRACE')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_BASE_DIR = os.path.dirname(BASE_DIR)
 
-def load_config():
+def load_config() -> dict:
+    '''
+    Args:
+        None
+    
+    Returns:
+        dict: the configuration dictionary.
+
+    Note:
+        The configuration file is located in the `config` folder of the project root directory, named `env.toml`.
+    '''
     config_path = os.path.join(os.path.join(BASE_BASE_DIR, 'config'), 'env.toml')
     try:
         return toml.load(config_path)
