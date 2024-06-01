@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>rabibridge.utils API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>rabibridge.utils</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import toml
+import sys
+import traceback
+import asyncio
+from types import FunctionType
+from typing import Generator, Tuple, Optional, Any, Callable
+from loguru import logger
+from pydantic import validate_call
+from functools import wraps
+from base64 import b64decode, b64encode
+
+# 切换日志等级到trace
+logger.remove()
+# logger.add(sink=os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), &#39;logs&#39;), rotation=&#39;1 day&#39;, retention=&#39;7 days&#39;, level=&#39;TRACE&#39;))
+logger.add(sys.stdout, level=&#39;TRACE&#39;)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_BASE_DIR = os.path.dirname(BASE_DIR)
+
+def load_config():
+    config_path = os.path.join(os.path.join(BASE_BASE_DIR, &#39;config&#39;), &#39;env.toml&#39;)
+    try:
+        return toml.load(config_path)
+    except:
+        return {}
+
+@validate_call
+def get_config_val(config: dict, k1: str, k2: str) -&gt; Any:
+    return config.get(k1, {}).get(k2, None)
+
+@validate_call
+def decode_pwd(cipher: Optional[str], secret: Optional[str], decrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
+    if cipher is None or secret is None:
+        return None
+    return b64decode(decrypt_function(b64decode(cipher.encode(&#39;utf-8&#39;)), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)
+
+@validate_call
+def encode_pwd(pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
+    if pwd is None or secret is None:
+        return None
+    return b64encode(encrypt_function(pwd.encode(&#39;utf-8&#39;), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)
+
+@validate_call
+def list_main_functions(global_symbols: dict[str, object], banned_names: list[str] = []) -&gt; Generator[Tuple[str, str, object], None, None]:
+    l = []
+    for name, obj in global_symbols.items():
+        if isinstance(obj, FunctionType):
+            if obj.__module__ in [&#39;__main__&#39;, &#39;__mp_main__&#39;]:
+                l.append([name, obj])
+    for name, obj in l:
+        if name not in banned_names:
+            yield name, obj
+
+@validate_call
+def register_call(
+    queue_size: Optional[int] = None, 
+    fetch_size: Optional[int] = None, 
+    timeout: Optional[int] = None,                   # secs
+    *,
+    validate: bool = False,
+    re_register: bool = False,
+):
+    &#39;&#39;&#39;
+    Args:
+        queue_size: what the queue length for this call should be (maximum number of waiting tasks). Default to None means no limit. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+        fetch_size: fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don&#39;t consume too many system resources under an I/O multiplexing model. However, you generally shouldn&#39;t let your application listen to too many file descriptors at the same time. Typically, maintaining the system&#39;s listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn&#39;t be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting `fetch_size` to a very small value is an effective way to protect the backend service. 
+        timeout: message timeout from the queue. Defaults to None. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+        validate: whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the pydantic.validate_call decorator. Defaults to False.
+        re_register: whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to False.
+
+    Note:
+        re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.
+    &#39;&#39;&#39;
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+        wrapper._schema = {
+            &#39;queue_size&#39;: queue_size,
+            &#39;fetch_size&#39;: fetch_size,
+            &#39;timeout&#39;: timeout * 1000 if timeout is not None else None,
+            &#39;re_register&#39;: re_register,
+            &#39;async&#39;: asyncio.iscoroutinefunction(func)
+        }
+        return wrapper if not validate else validate_call(wrapper)
+    return decorator
+
+
+def trace_exception(e: Exception) -&gt; str:
+    return &#39;&#39;.join(traceback.format_exception(type(e), value=e, tb=e.__traceback__))
+
+
+@validate_call
+def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False):
+    from multiprocessing import Process
+    from psutil import cpu_count
+    from psutil import Process as psutil_Process
+    
+    
+    if num_processes is None:
+        num_processes = cpu_count(logical=True)
+    processes = []
+    for i in range(num_processes):
+        p = Process(target=single_process, args=())
+        processes.append(p)
+        p.start()
+        if bind_core:
+            psp = psutil_Process(p.pid)
+            psp.cpu_affinity([i])
+
+    try:
+        for p in processes:
+            p.join()
+    except KeyboardInterrupt:
+        for p in processes:
+            p.terminate()
+            p.join()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="rabibridge.utils.decode_pwd"><code class="name flex">
+<span>def <span class="ident">decode_pwd</span></span>(<span>cipher: Optional[str], secret: Optional[str], decrypt_function: Callable[[bytes, bytes], bytes]) ‑> Optional[str]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def decode_pwd(cipher: Optional[str], secret: Optional[str], decrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
+    if cipher is None or secret is None:
+        return None
+    return b64decode(decrypt_function(b64decode(cipher.encode(&#39;utf-8&#39;)), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.utils.encode_pwd"><code class="name flex">
+<span>def <span class="ident">encode_pwd</span></span>(<span>pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) ‑> Optional[str]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def encode_pwd(pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
+    if pwd is None or secret is None:
+        return None
+    return b64encode(encrypt_function(pwd.encode(&#39;utf-8&#39;), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.utils.get_config_val"><code class="name flex">
+<span>def <span class="ident">get_config_val</span></span>(<span>config: dict, k1: str, k2: str) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def get_config_val(config: dict, k1: str, k2: str) -&gt; Any:
+    return config.get(k1, {}).get(k2, None)</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.utils.list_main_functions"><code class="name flex">
+<span>def <span class="ident">list_main_functions</span></span>(<span>global_symbols: dict[str, object], banned_names: list[str] = []) ‑> Generator[Tuple[str, str, object], None, None]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def list_main_functions(global_symbols: dict[str, object], banned_names: list[str] = []) -&gt; Generator[Tuple[str, str, object], None, None]:
+    l = []
+    for name, obj in global_symbols.items():
+        if isinstance(obj, FunctionType):
+            if obj.__module__ in [&#39;__main__&#39;, &#39;__mp_main__&#39;]:
+                l.append([name, obj])
+    for name, obj in l:
+        if name not in banned_names:
+            yield name, obj</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.utils.load_config"><code class="name flex">
+<span>def <span class="ident">load_config</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_config():
+    config_path = os.path.join(os.path.join(BASE_BASE_DIR, &#39;config&#39;), &#39;env.toml&#39;)
+    try:
+        return toml.load(config_path)
+    except:
+        return {}</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.utils.multiprocess_spawn_helper"><code class="name flex">
+<span>def <span class="ident">multiprocess_spawn_helper</span></span>(<span>num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False):
+    from multiprocessing import Process
+    from psutil import cpu_count
+    from psutil import Process as psutil_Process
+    
+    
+    if num_processes is None:
+        num_processes = cpu_count(logical=True)
+    processes = []
+    for i in range(num_processes):
+        p = Process(target=single_process, args=())
+        processes.append(p)
+        p.start()
+        if bind_core:
+            psp = psutil_Process(p.pid)
+            psp.cpu_affinity([i])
+
+    try:
+        for p in processes:
+            p.join()
+    except KeyboardInterrupt:
+        for p in processes:
+            p.terminate()
+            p.join()</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.utils.register_call"><code class="name flex">
+<span>def <span class="ident">register_call</span></span>(<span>queue_size: Optional[int] = None, fetch_size: Optional[int] = None, timeout: Optional[int] = None, *, validate: bool = False, re_register: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>queue_size</code></strong></dt>
+<dd>what the queue length for this call should be (maximum number of waiting tasks). Default to None means no limit. <em>Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.</em></dd>
+<dt><strong><code>fetch_size</code></strong></dt>
+<dd>fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don't consume too many system resources under an I/O multiplexing model. However, you generally shouldn't let your application listen to too many file descriptors at the same time. Typically, maintaining the system's listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn't be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting <code>fetch_size</code> to a very small value is an effective way to protect the backend service. </dd>
+<dt><strong><code>timeout</code></strong></dt>
+<dd>message timeout from the queue. Defaults to None. <em>Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.</em></dd>
+<dt><strong><code>validate</code></strong></dt>
+<dd>whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the pydantic.validate_call decorator. Defaults to False.</dd>
+<dt><strong><code>re_register</code></strong></dt>
+<dd>whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to False.</dd>
+</dl>
+<h2 id="note">Note</h2>
+<p>re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def register_call(
+    queue_size: Optional[int] = None, 
+    fetch_size: Optional[int] = None, 
+    timeout: Optional[int] = None,                   # secs
+    *,
+    validate: bool = False,
+    re_register: bool = False,
+):
+    &#39;&#39;&#39;
+    Args:
+        queue_size: what the queue length for this call should be (maximum number of waiting tasks). Default to None means no limit. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+        fetch_size: fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don&#39;t consume too many system resources under an I/O multiplexing model. However, you generally shouldn&#39;t let your application listen to too many file descriptors at the same time. Typically, maintaining the system&#39;s listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn&#39;t be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting `fetch_size` to a very small value is an effective way to protect the backend service. 
+        timeout: message timeout from the queue. Defaults to None. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+        validate: whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the pydantic.validate_call decorator. Defaults to False.
+        re_register: whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to False.
+
+    Note:
+        re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.
+    &#39;&#39;&#39;
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+        wrapper._schema = {
+            &#39;queue_size&#39;: queue_size,
+            &#39;fetch_size&#39;: fetch_size,
+            &#39;timeout&#39;: timeout * 1000 if timeout is not None else None,
+            &#39;re_register&#39;: re_register,
+            &#39;async&#39;: asyncio.iscoroutinefunction(func)
+        }
+        return wrapper if not validate else validate_call(wrapper)
+    return decorator</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.utils.trace_exception"><code class="name flex">
+<span>def <span class="ident">trace_exception</span></span>(<span>e: Exception) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def trace_exception(e: Exception) -&gt; str:
+    return &#39;&#39;.join(traceback.format_exception(type(e), value=e, tb=e.__traceback__))</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="rabibridge" href="index.html">rabibridge</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="rabibridge.utils.decode_pwd" href="#rabibridge.utils.decode_pwd">decode_pwd</a></code></li>
+<li><code><a title="rabibridge.utils.encode_pwd" href="#rabibridge.utils.encode_pwd">encode_pwd</a></code></li>
+<li><code><a title="rabibridge.utils.get_config_val" href="#rabibridge.utils.get_config_val">get_config_val</a></code></li>
+<li><code><a title="rabibridge.utils.list_main_functions" href="#rabibridge.utils.list_main_functions">list_main_functions</a></code></li>
+<li><code><a title="rabibridge.utils.load_config" href="#rabibridge.utils.load_config">load_config</a></code></li>
+<li><code><a title="rabibridge.utils.multiprocess_spawn_helper" href="#rabibridge.utils.multiprocess_spawn_helper">multiprocess_spawn_helper</a></code></li>
+<li><code><a title="rabibridge.utils.register_call" href="#rabibridge.utils.register_call">register_call</a></code></li>
+<li><code><a title="rabibridge.utils.trace_exception" href="#rabibridge.utils.trace_exception">trace_exception</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

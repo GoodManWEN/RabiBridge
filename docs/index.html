@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>rabibridge API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Package <code>rabibridge</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from .mq import RMQClient, RMQServer
+from .utils import logger, register_call, multiprocess_spawn_helper
+from .permissions import encrypt_pwd, decrypt_pwd
+from .exceptions import RemoteExecutionError
+
+__all__ = [
+    &#39;RMQClient&#39;, 
+    &#39;RMQServer&#39;, 
+    &#39;register_call&#39;, 
+    &#39;multiprocess_spawn_helper&#39;, 
+    &#39;encrypt_pwd&#39;, 
+    &#39;decrypt_pwd&#39;,
+    &#39;RemoteExecutionError&#39;,
+    &#39;logger&#39;, 
+]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="rabibridge.exceptions" href="exceptions.html">rabibridge.exceptions</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="rabibridge.models" href="models.html">rabibridge.models</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="rabibridge.mq" href="mq.html">rabibridge.mq</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="rabibridge.permissions" href="permissions.html">rabibridge.permissions</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="rabibridge.serialisation" href="serialisation.html">rabibridge.serialisation</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="rabibridge.utils" href="utils.html">rabibridge.utils</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="rabibridge.multiprocess_spawn_helper"><code class="name flex">
+<span>def <span class="ident">multiprocess_spawn_helper</span></span>(<span>num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False):
+    from multiprocessing import Process
+    from psutil import cpu_count
+    from psutil import Process as psutil_Process
+    
+    
+    if num_processes is None:
+        num_processes = cpu_count(logical=True)
+    processes = []
+    for i in range(num_processes):
+        p = Process(target=single_process, args=())
+        processes.append(p)
+        p.start()
+        if bind_core:
+            psp = psutil_Process(p.pid)
+            psp.cpu_affinity([i])
+
+    try:
+        for p in processes:
+            p.join()
+    except KeyboardInterrupt:
+        for p in processes:
+            p.terminate()
+            p.join()</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.register_call"><code class="name flex">
+<span>def <span class="ident">register_call</span></span>(<span>queue_size: Optional[int] = None, fetch_size: Optional[int] = None, timeout: Optional[int] = None, *, validate: bool = False, re_register: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>queue_size</code></strong></dt>
+<dd>what the queue length for this call should be (maximum number of waiting tasks). Default to None means no limit. <em>Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.</em></dd>
+<dt><strong><code>fetch_size</code></strong></dt>
+<dd>fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don't consume too many system resources under an I/O multiplexing model. However, you generally shouldn't let your application listen to too many file descriptors at the same time. Typically, maintaining the system's listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn't be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting <code>fetch_size</code> to a very small value is an effective way to protect the backend service. </dd>
+<dt><strong><code>timeout</code></strong></dt>
+<dd>message timeout from the queue. Defaults to None. <em>Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.</em></dd>
+<dt><strong><code>validate</code></strong></dt>
+<dd>whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the pydantic.validate_call decorator. Defaults to False.</dd>
+<dt><strong><code>re_register</code></strong></dt>
+<dd>whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to False.</dd>
+</dl>
+<h2 id="note">Note</h2>
+<p>re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def register_call(
+    queue_size: Optional[int] = None, 
+    fetch_size: Optional[int] = None, 
+    timeout: Optional[int] = None,                   # secs
+    *,
+    validate: bool = False,
+    re_register: bool = False,
+):
+    &#39;&#39;&#39;
+    Args:
+        queue_size: what the queue length for this call should be (maximum number of waiting tasks). Default to None means no limit. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+        fetch_size: fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don&#39;t consume too many system resources under an I/O multiplexing model. However, you generally shouldn&#39;t let your application listen to too many file descriptors at the same time. Typically, maintaining the system&#39;s listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn&#39;t be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting `fetch_size` to a very small value is an effective way to protect the backend service. 
+        timeout: message timeout from the queue. Defaults to None. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+        validate: whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the pydantic.validate_call decorator. Defaults to False.
+        re_register: whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to False.
+
+    Note:
+        re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.
+    &#39;&#39;&#39;
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+        wrapper._schema = {
+            &#39;queue_size&#39;: queue_size,
+            &#39;fetch_size&#39;: fetch_size,
+            &#39;timeout&#39;: timeout * 1000 if timeout is not None else None,
+            &#39;re_register&#39;: re_register,
+            &#39;async&#39;: asyncio.iscoroutinefunction(func)
+        }
+        return wrapper if not validate else validate_call(wrapper)
+    return decorator</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="rabibridge.RMQClient"><code class="flex name class">
+<span>class <span class="ident">RMQClient</span></span>
+<span>(</span><span>loop: Optional[asyncio.events.AbstractEventLoop] = None, host: Optional[str] = None, port: Optional[int] = None, username: Optional[str] = None, password: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Acting as a client-initiating requestor in a gateway service.</p>
+<p>The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>loop</code></strong></dt>
+<dd>Event loop in this particular process. Defaults to None.</dd>
+<dt><strong><code>host</code></strong></dt>
+<dd>RabbitMQ host. Defaults to None.</dd>
+<dt><strong><code>port</code></strong></dt>
+<dd>RabbitMQ port. Defaults to None.</dd>
+<dt><strong><code>username</code></strong></dt>
+<dd>RabbitMQ username. Defaults to None.</dd>
+<dt><strong><code>password</code></strong></dt>
+<dd>RabbitMQ password. Defaults to None.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RMQClient(RMQBase):
+    &#39;&#39;&#39;
+    Acting as a client-initiating requestor in a gateway service.
+    &#39;&#39;&#39;
+
+    def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None, host: Optional[str] = None, port: Optional[int] = None, username: Optional[str] = None, password: Optional[str] = None):
+        &#39;&#39;&#39;
+        The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.
+
+        Args:
+            loop: Event loop in this particular process. Defaults to None.
+            host: RabbitMQ host. Defaults to None.
+            port: RabbitMQ port. Defaults to None.
+            username: RabbitMQ username. Defaults to None.
+            password: RabbitMQ password. Defaults to None.
+        &#39;&#39;&#39;
+        super().__init__(loop, host, port, username, password)
+        random.seed(int.from_bytes(os.urandom(4), &#39;big&#39;))
+        self._cid_generator = self._cid_generator_func()
+        self.result_futures = {} 
+        
+    @property
+    def correlation_id(self) -&gt; str:
+        &#39;&#39;&#39;
+        A (periodically) self-incrementing pointer that should not normally be called directly by the user.
+        &#39;&#39;&#39;
+        return str(next(self._cid_generator))
+
+    def _cid_generator_func(self):
+        val = random.randint(0, CID_MAX) % CID_MAX
+        while True:
+            yield val
+            val = (val + 1) % CID_MAX
+
+    async def connect(self) -&gt; &#39;RMQClient&#39;:
+        &#39;&#39;&#39;
+        It should be connected using `connect()` before making the call and released using `close()` before closing the client. The client can be used as a context manager to ensure that the connection is closed properly after use.
+
+        Examples:
+            &gt;&gt;&gt; async with RMQClient(...) as client:
+            ...     res = await client.remote_call(...)
+            ...     print(res)
+        &#39;&#39;&#39;
+        self.connection = await aio_pika.connect(
+            host=RABBITMQ_HOST,
+            port=RABBITMQ_PORT,
+            login=RABBITMQ_USERNAME,
+            password=RABBITMQ_PASSWORD
+        )
+        self.channel = await self.connection.channel(on_return_raises=True)
+        &#39;&#39;&#39;
+        Current design is lacks of some flexibility, in that a call to an undeclared function can result in the channel broken and not continuing to be used any more. However, as this is the simplest way of returning an exception from a user call under AMQP that can be implemented at the moment. So, as a result, the current code requires developers to try out the code before deploying, which is not a huge drawback IMO.
+        &#39;&#39;&#39;
+        self.exchange = await self.channel.declare_exchange(
+            name=&#39;rpc&#39;, 
+            type=aio_pika.ExchangeType.DIRECT,
+            durable=True
+        )
+        self.callback_queue = await self.channel.declare_queue(&#39;&#39;, exclusive=True)
+        await self.callback_queue.consume(self._on_response, no_ack=True)
+        return self
+    
+    async def _on_response(self, message: AbstractIncomingMessage) -&gt; None:
+        logger.trace(f&#34;Received message: {message.body}, cid: {message.correlation_id}&#34;)
+        if message.correlation_id is None:
+            logger.warning(f&#34;Correlation ID is None: {repr(message)}&#34;)
+            return 
+        # else 
+        try:
+            future: asyncio.Future = self.result_futures.pop(message.correlation_id)
+        except KeyError:
+            # The task no longer exists on the front end
+            # logger.trace(f&#34;Correlation ID not found: {message.correlation_id}&#34;)
+            return
+        future.set_result(message.body)
+
+    async def remote_call(
+        self, 
+        func_name: str, 
+        args: tuple[Any] = (), 
+        kwargs: dict[Any] = {}, 
+        ftype: Literal[&#39;async&#39;, &#39;sync&#39;] = &#39;async&#39;,
+        *, 
+        timeout: Optional[float] = None
+    ) -&gt; Any:
+        &#39;&#39;&#39;
+        Args:
+            func_name: function name to be called.
+            args: arguments. Defaults to ().
+            kwargs: keyword arguments. Defaults to {}.
+            ftype: function type to be called remotely. e.g. defaults to &#39;async&#39;, and asynchronous call will be made on server side.
+            timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.
+
+        Note:
+            The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
+            This is due to the loose coupling of front-end and back-end in rabbitmq, and the timeout cancellation mechanism can not be controlled by the publisher, active cancellation is not easy to realize.
+            This function will uplift errors that may occur during execution:
+
+            This function raises errors that may occur during execution, possible errors are: call queue is full (aio_pika.Basic.Nack), call timeout (asyncio.TimeoutError), remote execution error (rabibridge.RemoteExecutionError).
+
+        Examples:
+            &gt;&gt;&gt; try:
+            ...     res = await client.remote_call(...)
+            &gt;&gt;&gt; Except Exceition as e:
+            ...     ...
+            
+        Returns:
+            Any: (result) The result of the remote call.
+        &#39;&#39;&#39;
+
+        # res_future = self.loop.create_future() # may cause future belongs to a different loop error under some particular engine implementation. Currently don&#39;t know reason.
+        res_future = asyncio.Future()
+        correlation_id = self.correlation_id
+        self.result_futures[correlation_id] = res_future
+        body: bytes = self._stream_compress([args, kwargs])
+
+        logger.trace(f&#34;Call async: {func_name}, {args}, {kwargs}, cid: {correlation_id}, sent body: {body}, routing_key: {ftype}_{func_name}&#34;)
+        try:
+            await self.exchange.publish(
+                aio_pika.Message(
+                    body=body,
+                    correlation_id=correlation_id,
+                    reply_to=self.callback_queue.name
+                ),
+                routing_key=f&#34;{ftype}_{func_name}&#34;,
+                mandatory=True
+            )
+        except Exception as e: # Basic.Nack
+            del self.result_futures[correlation_id]
+            raise e
+
+        try:
+            res_bytes = await asyncio.wait_for(res_future, timeout=timeout)
+            err_code, res = self._stream_decompress(res_bytes)
+        except asyncio.TimeoutError as toe:
+            logger.error(f&#34;Timeout/decode error, cid: {correlation_id}&#34;)
+            del self.result_futures[correlation_id]
+            raise toe
+        else:
+            logger.trace(f&#34;Result: {err_code}: {res}, cid: {correlation_id}&#34;)
+            if err_code == 1:
+                raise RemoteExecutionError(res)
+            return res
+        
+    async def try_remote_call(
+        self, 
+        func_name: str, 
+        args: tuple[Any] = (), 
+        kwargs: dict[Any] = {}, 
+        ftype: Literal[&#39;async&#39;, &#39;sync&#39;] = &#39;async&#39;,
+        *, 
+        timeout: Optional[float] = None
+    ) -&gt; Tuple[bool, Tuple[int, Any]]:
+        &#39;&#39;&#39;
+        A simplified way of writing remote_call, there is no essential difference between the two. Instead of doing a try except externally, you control the process execution through the error code.
+
+        Return:
+            (bool, Tuple[int, Any]): (success, (err_code, result))
+            Where success means if the call successfully returns on client side, if it returns normally, it means that no timeout or full queue error has occurred, but this does not mean that the returned result is reliable.
+            While err_code means if the call run smoothly on remote side, 0 for success, 1 for error. 
+
+            The relationship between success and err_code: If error_code is 0, the result is reliable. If error_code is 1, it is necessary to determine whether the error occurred on the client or server side based on success.
+        &#39;&#39;&#39;
+        try:
+            res: Tuple[int, Any] = await self.remote_call(func_name, args, kwargs, ftype, timeout=timeout)
+            return True, res
+        except Exception as e:
+            return False, [1, e]
+
+
+    async def close(self):
+        if self.connection is not None:
+            await self.connection.close()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="rabibridge.mq.RMQBase" href="mq.html#rabibridge.mq.RMQBase">RMQBase</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="rabibridge.RMQClient.correlation_id"><code class="name">var <span class="ident">correlation_id</span> : str</code></dt>
+<dd>
+<div class="desc"><p>A (periodically) self-incrementing pointer that should not normally be called directly by the user.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def correlation_id(self) -&gt; str:
+    &#39;&#39;&#39;
+    A (periodically) self-incrementing pointer that should not normally be called directly by the user.
+    &#39;&#39;&#39;
+    return str(next(self._cid_generator))</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="rabibridge.RMQClient.close"><code class="name flex">
+<span>async def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def close(self):
+    if self.connection is not None:
+        await self.connection.close()</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.RMQClient.connect"><code class="name flex">
+<span>async def <span class="ident">connect</span></span>(<span>self) ‑> <a title="rabibridge.mq.RMQClient" href="mq.html#rabibridge.mq.RMQClient">RMQClient</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>It should be connected using <code>connect()</code> before making the call and released using <code>close()</code> before closing the client. The client can be used as a context manager to ensure that the connection is closed properly after use.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; async with RMQClient(...) as client:
+...     res = await client.remote_call(...)
+...     print(res)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def connect(self) -&gt; &#39;RMQClient&#39;:
+    &#39;&#39;&#39;
+    It should be connected using `connect()` before making the call and released using `close()` before closing the client. The client can be used as a context manager to ensure that the connection is closed properly after use.
+
+    Examples:
+        &gt;&gt;&gt; async with RMQClient(...) as client:
+        ...     res = await client.remote_call(...)
+        ...     print(res)
+    &#39;&#39;&#39;
+    self.connection = await aio_pika.connect(
+        host=RABBITMQ_HOST,
+        port=RABBITMQ_PORT,
+        login=RABBITMQ_USERNAME,
+        password=RABBITMQ_PASSWORD
+    )
+    self.channel = await self.connection.channel(on_return_raises=True)
+    &#39;&#39;&#39;
+    Current design is lacks of some flexibility, in that a call to an undeclared function can result in the channel broken and not continuing to be used any more. However, as this is the simplest way of returning an exception from a user call under AMQP that can be implemented at the moment. So, as a result, the current code requires developers to try out the code before deploying, which is not a huge drawback IMO.
+    &#39;&#39;&#39;
+    self.exchange = await self.channel.declare_exchange(
+        name=&#39;rpc&#39;, 
+        type=aio_pika.ExchangeType.DIRECT,
+        durable=True
+    )
+    self.callback_queue = await self.channel.declare_queue(&#39;&#39;, exclusive=True)
+    await self.callback_queue.consume(self._on_response, no_ack=True)
+    return self</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.RMQClient.remote_call"><code class="name flex">
+<span>async def <span class="ident">remote_call</span></span>(<span>self, func_name: str, args: tuple[typing.Any] = (), kwargs: dict[typing.Any] = {}, ftype: Literal['async', 'sync'] = 'async', *, timeout: Optional[float] = None) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>func_name</code></strong></dt>
+<dd>function name to be called.</dd>
+<dt><strong><code>args</code></strong></dt>
+<dd>arguments. Defaults to ().</dd>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>keyword arguments. Defaults to {}.</dd>
+<dt><strong><code>ftype</code></strong></dt>
+<dd>function type to be called remotely. e.g. defaults to 'async', and asynchronous call will be made on server side.</dd>
+<dt><strong><code>timeout</code></strong></dt>
+<dd>Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.</dd>
+</dl>
+<h2 id="note">Note</h2>
+<p>The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
+This is due to the loose coupling of front-end and back-end in rabbitmq, and the timeout cancellation mechanism can not be controlled by the publisher, active cancellation is not easy to realize.
+This function will uplift errors that may occur during execution:</p>
+<p>This function raises errors that may occur during execution, possible errors are: call queue is full (aio_pika.Basic.Nack), call timeout (asyncio.TimeoutError), remote execution error (rabibridge.RemoteExecutionError).</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; try:
+...     res = await client.remote_call(...)
+&gt;&gt;&gt; Except Exceition as e:
+...     ...
+</code></pre>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Any</code></dt>
+<dd>(result) The result of the remote call.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def remote_call(
+    self, 
+    func_name: str, 
+    args: tuple[Any] = (), 
+    kwargs: dict[Any] = {}, 
+    ftype: Literal[&#39;async&#39;, &#39;sync&#39;] = &#39;async&#39;,
+    *, 
+    timeout: Optional[float] = None
+) -&gt; Any:
+    &#39;&#39;&#39;
+    Args:
+        func_name: function name to be called.
+        args: arguments. Defaults to ().
+        kwargs: keyword arguments. Defaults to {}.
+        ftype: function type to be called remotely. e.g. defaults to &#39;async&#39;, and asynchronous call will be made on server side.
+        timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.
+
+    Note:
+        The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
+        This is due to the loose coupling of front-end and back-end in rabbitmq, and the timeout cancellation mechanism can not be controlled by the publisher, active cancellation is not easy to realize.
+        This function will uplift errors that may occur during execution:
+
+        This function raises errors that may occur during execution, possible errors are: call queue is full (aio_pika.Basic.Nack), call timeout (asyncio.TimeoutError), remote execution error (rabibridge.RemoteExecutionError).
+
+    Examples:
+        &gt;&gt;&gt; try:
+        ...     res = await client.remote_call(...)
+        &gt;&gt;&gt; Except Exceition as e:
+        ...     ...
+        
+    Returns:
+        Any: (result) The result of the remote call.
+    &#39;&#39;&#39;
+
+    # res_future = self.loop.create_future() # may cause future belongs to a different loop error under some particular engine implementation. Currently don&#39;t know reason.
+    res_future = asyncio.Future()
+    correlation_id = self.correlation_id
+    self.result_futures[correlation_id] = res_future
+    body: bytes = self._stream_compress([args, kwargs])
+
+    logger.trace(f&#34;Call async: {func_name}, {args}, {kwargs}, cid: {correlation_id}, sent body: {body}, routing_key: {ftype}_{func_name}&#34;)
+    try:
+        await self.exchange.publish(
+            aio_pika.Message(
+                body=body,
+                correlation_id=correlation_id,
+                reply_to=self.callback_queue.name
+            ),
+            routing_key=f&#34;{ftype}_{func_name}&#34;,
+            mandatory=True
+        )
+    except Exception as e: # Basic.Nack
+        del self.result_futures[correlation_id]
+        raise e
+
+    try:
+        res_bytes = await asyncio.wait_for(res_future, timeout=timeout)
+        err_code, res = self._stream_decompress(res_bytes)
+    except asyncio.TimeoutError as toe:
+        logger.error(f&#34;Timeout/decode error, cid: {correlation_id}&#34;)
+        del self.result_futures[correlation_id]
+        raise toe
+    else:
+        logger.trace(f&#34;Result: {err_code}: {res}, cid: {correlation_id}&#34;)
+        if err_code == 1:
+            raise RemoteExecutionError(res)
+        return res</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.RMQClient.try_remote_call"><code class="name flex">
+<span>async def <span class="ident">try_remote_call</span></span>(<span>self, func_name: str, args: tuple[typing.Any] = (), kwargs: dict[typing.Any] = {}, ftype: Literal['async', 'sync'] = 'async', *, timeout: Optional[float] = None) ‑> Tuple[bool, Tuple[int, Any]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A simplified way of writing remote_call, there is no essential difference between the two. Instead of doing a try except externally, you control the process execution through the error code.</p>
+<h2 id="return">Return</h2>
+<p>(bool, Tuple[int, Any]): (success, (err_code, result))
+Where success means if the call successfully returns on client side, if it returns normally, it means that no timeout or full queue error has occurred, but this does not mean that the returned result is reliable.
+While err_code means if the call run smoothly on remote side, 0 for success, 1 for error. </p>
+<p>The relationship between success and err_code: If error_code is 0, the result is reliable. If error_code is 1, it is necessary to determine whether the error occurred on the client or server side based on success.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def try_remote_call(
+    self, 
+    func_name: str, 
+    args: tuple[Any] = (), 
+    kwargs: dict[Any] = {}, 
+    ftype: Literal[&#39;async&#39;, &#39;sync&#39;] = &#39;async&#39;,
+    *, 
+    timeout: Optional[float] = None
+) -&gt; Tuple[bool, Tuple[int, Any]]:
+    &#39;&#39;&#39;
+    A simplified way of writing remote_call, there is no essential difference between the two. Instead of doing a try except externally, you control the process execution through the error code.
+
+    Return:
+        (bool, Tuple[int, Any]): (success, (err_code, result))
+        Where success means if the call successfully returns on client side, if it returns normally, it means that no timeout or full queue error has occurred, but this does not mean that the returned result is reliable.
+        While err_code means if the call run smoothly on remote side, 0 for success, 1 for error. 
+
+        The relationship between success and err_code: If error_code is 0, the result is reliable. If error_code is 1, it is necessary to determine whether the error occurred on the client or server side based on success.
+    &#39;&#39;&#39;
+    try:
+        res: Tuple[int, Any] = await self.remote_call(func_name, args, kwargs, ftype, timeout=timeout)
+        return True, res
+    except Exception as e:
+        return False, [1, e]</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="rabibridge.RMQServer"><code class="flex name class">
+<span>class <span class="ident">RMQServer</span></span>
+<span>(</span><span>loop: Optional[asyncio.events.AbstractEventLoop] = None, host: Optional[str] = None, port: Optional[int] = None, username: Optional[str] = None, password: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Used to provide services with daemon process.</p>
+<p>The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>loop</code></strong></dt>
+<dd>Event loop in this particular process. Defaults to None.</dd>
+<dt><strong><code>host</code></strong></dt>
+<dd>RabbitMQ host. Defaults to None.</dd>
+<dt><strong><code>port</code></strong></dt>
+<dd>RabbitMQ port. Defaults to None.</dd>
+<dt><strong><code>username</code></strong></dt>
+<dd>RabbitMQ username. Defaults to None.</dd>
+<dt><strong><code>password</code></strong></dt>
+<dd>RabbitMQ password. Defaults to None.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RMQServer(RMQBase):
+    &#39;&#39;&#39;
+    Used to provide services with daemon process.
+    &#39;&#39;&#39;
+
+    def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None, host: Optional[str] = None, port: Optional[int] = None, username: Optional[str] = None, password: Optional[str] = None):
+        &#39;&#39;&#39;
+        The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.
+
+        Args:
+            loop: Event loop in this particular process. Defaults to None.
+            host: RabbitMQ host. Defaults to None.
+            port: RabbitMQ port. Defaults to None.
+            username: RabbitMQ username. Defaults to None.
+            password: RabbitMQ password. Defaults to None.
+        &#39;&#39;&#39;
+        super().__init__(loop, host, port, username, password)
+        self.services: Optional[dict[str, ServiceSchema]] = None
+        self.channels: list[AbstractChannel] = []
+        self._srv_coros = []
+
+    @validate_call
+    def load_services(self, symbols: dict[str, object]) -&gt; None:
+        &#39;&#39;&#39;
+        Automatically captures all registered functions in global space, using which requires that all the specified call has already been registered.
+
+        Args:
+            symbols: global dict.
+
+        Examples:
+            &gt;&gt;&gt; @register_call(...)
+            &gt;&gt;&gt; def call_1():
+            ...     ...
+            &gt;&gt;&gt; obj.load_services(globals())
+            None # call_1 has been loaded
+        &#39;&#39;&#39;
+        self.services = {}
+        for name, ptr in list_main_functions(symbols, banned_names=[]):
+            schema = getattr(ptr, &#39;_schema&#39;, None)
+            if schema is None: 
+                continue
+                # queue_size, fetch_size, timeout, re_register, is_async = None, None, None, False, asyncio.iscoroutinefunction(ptr)
+            else:
+                queue_size, fetch_size, timeout, re_register, is_async = schema.values()
+            if queue_size is not None and fetch_size is not None:
+                assert fetch_size &lt;= queue_size # have to be true
+            queue_name = f&#34;rpc_{&#39;async&#39; if is_async else &#39;sync&#39;}_{name}&#34;
+            self.services[queue_name] = {
+                &#39;queue_name&#39;: queue_name, 
+                &#39;queue_obj&#39;: None,
+                &#39;func_ptr&#39;: ptr, 
+                &#39;queue_size&#39;: queue_size, 
+                &#39;fetch_size&#39;: fetch_size,
+                &#39;timeout&#39;: timeout,
+                &#39;re_register&#39;: re_register,
+                &#39;is_async&#39;: is_async
+            }
+            logger.info(f&#34;Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. {ptr}&#34;)
+
+    @validate_call
+    def add_service(self, func_ptr: Callable[..., Any], queue_size: Optional[int], fetch_size: Optional[int], timeout: Optional[int] = None, re_register: bool = False):
+        &#39;&#39;&#39;
+        If you do not wish to use automatic capture, you can register the service manually. Manually registered services do not need to be pre-registered using the `recister_call` decorator.
+
+        For technical details and meanings of the parameters, please refer to the description in `register_call`.
+
+        Args:
+            func_ptr: function pointer.
+            queue_size: queue size.
+            fetch_size: fetch size.
+            timeout: timeout. Defaults to None.
+            re_register: re-register. Defaults to False.
+            
+        &#39;&#39;&#39;
+        if not isinstance(func_ptr, FunctionType):
+            raise ValueError(&#34;func_ptr must be a function pointer.&#34;)
+        label = &#39;sync&#39;
+        if asyncio.iscoroutinefunction(func_ptr):
+            label = &#39;async&#39;
+        queue_name = f&#34;rpc_{label}_{func_ptr.__name__}&#34;
+        if queue_size is not None and fetch_size is not None:
+            assert fetch_size &lt;= queue_size # have to be true
+        if self.services is None:
+            self.services = {}
+        self.services[queue_name] = {
+            &#39;queue_name&#39;: queue_name, 
+            &#39;queue_obj&#39;: None,
+            &#39;func_ptr&#39;: func_ptr, 
+            &#39;queue_size&#39;: queue_size, 
+            &#39;fetch_size&#39;: fetch_size,
+            &#39;timeout&#39;: timeout,
+            &#39;re_register&#39;: re_register
+        }
+        logger.info(f&#34;Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. {func_ptr}&#34;)
+
+    async def connect(self) -&gt; &#34;RMQServer&#34;:
+        &#39;&#39;&#39;
+        It should be connected using `connect()` before making the call and released using `close()` before closing the client. The client can be used as a context manager to ensure that the connection is closed properly after use.
+        
+        Examples:
+            &gt;&gt;&gt; s = RMQServer(...)
+            &gt;&gt;&gt; s.load_services(globals())
+            &gt;&gt;&gt; async with s:
+            ...     await server.run_serve()
+        &#39;&#39;&#39;
+        if self.services is None:
+            raise ValueError(&#34;Services not loaded, you must load services first.&#34;)
+        if self.connection is not None:
+            raise ValueError(&#34;Connection already exists.&#34;)
+        
+        self.connection = await aio_pika.connect(
+            host=RABBITMQ_HOST,
+            port=RABBITMQ_PORT,
+            login=RABBITMQ_USERNAME,
+            password=RABBITMQ_PASSWORD
+        )
+
+        for queue_name, serv_obj in self.services.items():
+            queue_name, _, func_ptr, queue_size, fetch_size, timeout, re_register, is_async = serv_obj.values()
+            # channel
+            channel: AbstractChannel = await self.connection.channel()
+            if fetch_size is not None:
+                await channel.set_qos(prefetch_count=fetch_size)
+            self.channels.append(channel)
+            exchange = await channel.declare_exchange(
+                name=&#39;rpc&#39;,
+                type=aio_pika.ExchangeType.DIRECT,
+                durable=True
+            )
+
+            # queue
+            args = {&#39;x-overflow&#39;: &#39;reject-publish&#39;}
+            if timeout is not None:
+                args[&#39;x-message-ttl&#39;] = timeout
+            if queue_size is not None:
+                args[&#39;x-max-length&#39;] = queue_size
+            if re_register:
+                try:
+                    await channel.declare_queue(name=queue_name, durable=True, arguments=args, passive=True)
+                    await channel.queue_delete(queue_name)
+                    logger.trace(f&#34;Queue {queue_name} exist, former one deleted.&#34;)
+                except aio_pika.exceptions.ChannelClosed:
+                    # queue does not exist
+                    logger.trace(f&#34;Queue {queue_name} does not exist.&#34;)
+            queue = await channel.declare_queue(name=queue_name, durable=True, arguments=args)
+            await queue.bind(exchange, routing_key=queue_name[4:])
+            self.services[queue_name][&#39;queue_obj&#39;] = queue 
+            self._srv_coros.append(self._queue_listen_handler(queue, func_ptr, channel, is_async_function=is_async))
+            
+        return self
+    
+
+    async def _call_handler(self, message: AbstractIncomingMessage, func_ptr: callable, channel: AbstractChannel, is_async_function: bool):
+        try:
+            async with message.process():
+                if message.reply_to is None:
+                    raise ValueError(&#34;Reply_to queue is None&#34;)
+                args, kwargs = self._stream_decompress(message.body)
+                logger.debug(f&#34;Received message: {args}, {kwargs}, cid: {message.correlation_id}, reply_to: {message.reply_to}&#34;)
+                call_code: int = 0 
+                try:
+                    if is_async_function:
+                        result = await func_ptr(*args, **kwargs)
+                    else:
+                        result = func_ptr(*args, **kwargs)       ### TBD: migration to use thread pooling for execution
+                except Exception as e:
+                    call_code = 1
+                    trace_exception(e)
+                if call_code == 0:
+                    logger.trace(f&#34;Run result: {result}&#34;)
+                    ret_body = self._stream_compress([call_code, result])
+                else:
+                    err_msg = trace_exception(e)
+                    logger.debug(f&#34;Run error: {err_msg}&#34;)
+                    ret_body = self._stream_compress([call_code, err_msg])
+                await channel.default_exchange.publish(
+                    aio_pika.Message(
+                        body=ret_body, 
+                        correlation_id=message.correlation_id
+                    ),
+                    routing_key=message.reply_to
+                )
+                logger.trace(f&#34;Sent result: {result}, cid: {message.correlation_id}&#34;)
+        except Exception as e:
+            if DEBUG_MODE:
+                raise e
+            logger.error(trace_exception(e))
+
+    async def _queue_listen_handler(self, queue: aio_pika.Queue, func_ptr: callable, channel: AbstractChannel, is_async_function: bool):
+        logger.info(&#39;start listening&#39;)  
+        async with queue.iterator() as qiterator:
+            async for message in qiterator: # message: AbstractIncomingMessage
+                self.loop.create_task(self._call_handler(message, func_ptr, channel, is_async_function))
+
+    async def run_serve(self):
+        &#39;&#39;&#39;
+        Start the service, the program will block once called.
+        &#39;&#39;&#39;
+        logger.info(&#39;start serving...&#39;)
+        await asyncio.gather(*self._srv_coros)
+  
+    async def close(self):
+        logger.info(&#39;closing...&#39;)
+        if self.connection is not None:
+            await self.connection.close()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="rabibridge.mq.RMQBase" href="mq.html#rabibridge.mq.RMQBase">RMQBase</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="rabibridge.RMQServer.add_service"><code class="name flex">
+<span>def <span class="ident">add_service</span></span>(<span>self, func_ptr: Callable[..., Any], queue_size: Optional[int], fetch_size: Optional[int], timeout: Optional[int] = None, re_register: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>If you do not wish to use automatic capture, you can register the service manually. Manually registered services do not need to be pre-registered using the <code>recister_call</code> decorator.</p>
+<p>For technical details and meanings of the parameters, please refer to the description in <code><a title="rabibridge.register_call" href="#rabibridge.register_call">register_call()</a></code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>func_ptr</code></strong></dt>
+<dd>function pointer.</dd>
+<dt><strong><code>queue_size</code></strong></dt>
+<dd>queue size.</dd>
+<dt><strong><code>fetch_size</code></strong></dt>
+<dd>fetch size.</dd>
+<dt><strong><code>timeout</code></strong></dt>
+<dd>timeout. Defaults to None.</dd>
+<dt><strong><code>re_register</code></strong></dt>
+<dd>re-register. Defaults to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def add_service(self, func_ptr: Callable[..., Any], queue_size: Optional[int], fetch_size: Optional[int], timeout: Optional[int] = None, re_register: bool = False):
+    &#39;&#39;&#39;
+    If you do not wish to use automatic capture, you can register the service manually. Manually registered services do not need to be pre-registered using the `recister_call` decorator.
+
+    For technical details and meanings of the parameters, please refer to the description in `register_call`.
+
+    Args:
+        func_ptr: function pointer.
+        queue_size: queue size.
+        fetch_size: fetch size.
+        timeout: timeout. Defaults to None.
+        re_register: re-register. Defaults to False.
+        
+    &#39;&#39;&#39;
+    if not isinstance(func_ptr, FunctionType):
+        raise ValueError(&#34;func_ptr must be a function pointer.&#34;)
+    label = &#39;sync&#39;
+    if asyncio.iscoroutinefunction(func_ptr):
+        label = &#39;async&#39;
+    queue_name = f&#34;rpc_{label}_{func_ptr.__name__}&#34;
+    if queue_size is not None and fetch_size is not None:
+        assert fetch_size &lt;= queue_size # have to be true
+    if self.services is None:
+        self.services = {}
+    self.services[queue_name] = {
+        &#39;queue_name&#39;: queue_name, 
+        &#39;queue_obj&#39;: None,
+        &#39;func_ptr&#39;: func_ptr, 
+        &#39;queue_size&#39;: queue_size, 
+        &#39;fetch_size&#39;: fetch_size,
+        &#39;timeout&#39;: timeout,
+        &#39;re_register&#39;: re_register
+    }
+    logger.info(f&#34;Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. {func_ptr}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.RMQServer.close"><code class="name flex">
+<span>async def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def close(self):
+    logger.info(&#39;closing...&#39;)
+    if self.connection is not None:
+        await self.connection.close()</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.RMQServer.connect"><code class="name flex">
+<span>async def <span class="ident">connect</span></span>(<span>self) ‑> <a title="rabibridge.mq.RMQServer" href="mq.html#rabibridge.mq.RMQServer">RMQServer</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>It should be connected using <code>connect()</code> before making the call and released using <code>close()</code> before closing the client. The client can be used as a context manager to ensure that the connection is closed properly after use.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; s = RMQServer(...)
+&gt;&gt;&gt; s.load_services(globals())
+&gt;&gt;&gt; async with s:
+...     await server.run_serve()
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def connect(self) -&gt; &#34;RMQServer&#34;:
+    &#39;&#39;&#39;
+    It should be connected using `connect()` before making the call and released using `close()` before closing the client. The client can be used as a context manager to ensure that the connection is closed properly after use.
+    
+    Examples:
+        &gt;&gt;&gt; s = RMQServer(...)
+        &gt;&gt;&gt; s.load_services(globals())
+        &gt;&gt;&gt; async with s:
+        ...     await server.run_serve()
+    &#39;&#39;&#39;
+    if self.services is None:
+        raise ValueError(&#34;Services not loaded, you must load services first.&#34;)
+    if self.connection is not None:
+        raise ValueError(&#34;Connection already exists.&#34;)
+    
+    self.connection = await aio_pika.connect(
+        host=RABBITMQ_HOST,
+        port=RABBITMQ_PORT,
+        login=RABBITMQ_USERNAME,
+        password=RABBITMQ_PASSWORD
+    )
+
+    for queue_name, serv_obj in self.services.items():
+        queue_name, _, func_ptr, queue_size, fetch_size, timeout, re_register, is_async = serv_obj.values()
+        # channel
+        channel: AbstractChannel = await self.connection.channel()
+        if fetch_size is not None:
+            await channel.set_qos(prefetch_count=fetch_size)
+        self.channels.append(channel)
+        exchange = await channel.declare_exchange(
+            name=&#39;rpc&#39;,
+            type=aio_pika.ExchangeType.DIRECT,
+            durable=True
+        )
+
+        # queue
+        args = {&#39;x-overflow&#39;: &#39;reject-publish&#39;}
+        if timeout is not None:
+            args[&#39;x-message-ttl&#39;] = timeout
+        if queue_size is not None:
+            args[&#39;x-max-length&#39;] = queue_size
+        if re_register:
+            try:
+                await channel.declare_queue(name=queue_name, durable=True, arguments=args, passive=True)
+                await channel.queue_delete(queue_name)
+                logger.trace(f&#34;Queue {queue_name} exist, former one deleted.&#34;)
+            except aio_pika.exceptions.ChannelClosed:
+                # queue does not exist
+                logger.trace(f&#34;Queue {queue_name} does not exist.&#34;)
+        queue = await channel.declare_queue(name=queue_name, durable=True, arguments=args)
+        await queue.bind(exchange, routing_key=queue_name[4:])
+        self.services[queue_name][&#39;queue_obj&#39;] = queue 
+        self._srv_coros.append(self._queue_listen_handler(queue, func_ptr, channel, is_async_function=is_async))
+        
+    return self</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.RMQServer.load_services"><code class="name flex">
+<span>def <span class="ident">load_services</span></span>(<span>self, symbols: dict[str, object]) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Automatically captures all registered functions in global space, using which requires that all the specified call has already been registered.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>symbols</code></strong></dt>
+<dd>global dict.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; @register_call(...)
+&gt;&gt;&gt; def call_1():
+...     ...
+&gt;&gt;&gt; obj.load_services(globals())
+None # call_1 has been loaded
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@validate_call
+def load_services(self, symbols: dict[str, object]) -&gt; None:
+    &#39;&#39;&#39;
+    Automatically captures all registered functions in global space, using which requires that all the specified call has already been registered.
+
+    Args:
+        symbols: global dict.
+
+    Examples:
+        &gt;&gt;&gt; @register_call(...)
+        &gt;&gt;&gt; def call_1():
+        ...     ...
+        &gt;&gt;&gt; obj.load_services(globals())
+        None # call_1 has been loaded
+    &#39;&#39;&#39;
+    self.services = {}
+    for name, ptr in list_main_functions(symbols, banned_names=[]):
+        schema = getattr(ptr, &#39;_schema&#39;, None)
+        if schema is None: 
+            continue
+            # queue_size, fetch_size, timeout, re_register, is_async = None, None, None, False, asyncio.iscoroutinefunction(ptr)
+        else:
+            queue_size, fetch_size, timeout, re_register, is_async = schema.values()
+        if queue_size is not None and fetch_size is not None:
+            assert fetch_size &lt;= queue_size # have to be true
+        queue_name = f&#34;rpc_{&#39;async&#39; if is_async else &#39;sync&#39;}_{name}&#34;
+        self.services[queue_name] = {
+            &#39;queue_name&#39;: queue_name, 
+            &#39;queue_obj&#39;: None,
+            &#39;func_ptr&#39;: ptr, 
+            &#39;queue_size&#39;: queue_size, 
+            &#39;fetch_size&#39;: fetch_size,
+            &#39;timeout&#39;: timeout,
+            &#39;re_register&#39;: re_register,
+            &#39;is_async&#39;: is_async
+        }
+        logger.info(f&#34;Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. {ptr}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="rabibridge.RMQServer.run_serve"><code class="name flex">
+<span>async def <span class="ident">run_serve</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Start the service, the program will block once called.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def run_serve(self):
+    &#39;&#39;&#39;
+    Start the service, the program will block once called.
+    &#39;&#39;&#39;
+    logger.info(&#39;start serving...&#39;)
+    await asyncio.gather(*self._srv_coros)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="rabibridge.RemoteExecutionError"><code class="flex name class">
+<span>class <span class="ident">RemoteExecutionError</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Raised when an exception occurs during remote execution.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RemoteExecutionError(Exception):
+    &#39;&#39;&#39;
+    Raised when an exception occurs during remote execution.
+    &#39;&#39;&#39;
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="rabibridge.exceptions" href="exceptions.html">rabibridge.exceptions</a></code></li>
+<li><code><a title="rabibridge.models" href="models.html">rabibridge.models</a></code></li>
+<li><code><a title="rabibridge.mq" href="mq.html">rabibridge.mq</a></code></li>
+<li><code><a title="rabibridge.permissions" href="permissions.html">rabibridge.permissions</a></code></li>
+<li><code><a title="rabibridge.serialisation" href="serialisation.html">rabibridge.serialisation</a></code></li>
+<li><code><a title="rabibridge.utils" href="utils.html">rabibridge.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="rabibridge.multiprocess_spawn_helper" href="#rabibridge.multiprocess_spawn_helper">multiprocess_spawn_helper</a></code></li>
+<li><code><a title="rabibridge.register_call" href="#rabibridge.register_call">register_call</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="rabibridge.RMQClient" href="#rabibridge.RMQClient">RMQClient</a></code></h4>
+<ul class="">
+<li><code><a title="rabibridge.RMQClient.close" href="#rabibridge.RMQClient.close">close</a></code></li>
+<li><code><a title="rabibridge.RMQClient.connect" href="#rabibridge.RMQClient.connect">connect</a></code></li>
+<li><code><a title="rabibridge.RMQClient.correlation_id" href="#rabibridge.RMQClient.correlation_id">correlation_id</a></code></li>
+<li><code><a title="rabibridge.RMQClient.remote_call" href="#rabibridge.RMQClient.remote_call">remote_call</a></code></li>
+<li><code><a title="rabibridge.RMQClient.try_remote_call" href="#rabibridge.RMQClient.try_remote_call">try_remote_call</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="rabibridge.RMQServer" href="#rabibridge.RMQServer">RMQServer</a></code></h4>
+<ul class="">
+<li><code><a title="rabibridge.RMQServer.add_service" href="#rabibridge.RMQServer.add_service">add_service</a></code></li>
+<li><code><a title="rabibridge.RMQServer.close" href="#rabibridge.RMQServer.close">close</a></code></li>
+<li><code><a title="rabibridge.RMQServer.connect" href="#rabibridge.RMQServer.connect">connect</a></code></li>
+<li><code><a title="rabibridge.RMQServer.load_services" href="#rabibridge.RMQServer.load_services">load_services</a></code></li>
+<li><code><a title="rabibridge.RMQServer.run_serve" href="#rabibridge.RMQServer.run_serve">run_serve</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="rabibridge.RemoteExecutionError" href="#rabibridge.RemoteExecutionError">RemoteExecutionError</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
