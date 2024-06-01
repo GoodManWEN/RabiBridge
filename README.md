@@ -50,6 +50,8 @@ docker run -d \
 
 2. Import `RabiBridge`, create a function to call, register and run serve.
 ```python
+# -*- coding: utf-8 -*-
+# File name: service.py
 import asyncio
 from rabibridge import RMQServer, register_call
 
@@ -123,7 +125,7 @@ SECRET = "your secret that no one knows"       # Avoid being known by anyone.
 
 ![](https://github.com/GoodManWEN/RabiBridge/blob/main/misc/echo-performance-with-number-of-cpu-cores.png?raw=true)
 
-Testing platform: 
+Testing Platform: 
 ```
 CPU Model            : Intel(R) Xeon(R) Platinum 8369B CPU @ 2.70GHz
 CPU Cores            : 16 Cores 2699.998 MHz x86_64
