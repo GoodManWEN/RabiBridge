@@ -138,4 +138,4 @@ Region               : California
 ```
 
 ## Licence
-The MIT License
+Apache-2.0 License
