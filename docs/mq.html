@@ -71,18 +71,22 @@ class RMQBase:
             if RABBITMQ_HOST is None:
                 raise ValueError(&#34;Invalid RabbitMQ host.&#34;)
             host = RABBITMQ_HOST
+        self.host = host
         if port is None:
             if RABBITMQ_PORT is None:
                 raise ValueError(&#34;Invalid RabbitMQ port.&#34;)
             port = RABBITMQ_PORT
+        self.port = port
         if username is None:
             if RABBITMQ_USERNAME is None:
                 raise ValueError(&#34;Invalid RabbitMQ username.&#34;)
             username = RABBITMQ_USERNAME
+        self.username = username
         if password is None:
             if RABBITMQ_PASSWORD is None:
                 raise ValueError(&#34;Invalid RabbitMQ password.&#34;)
             password = RABBITMQ_PASSWORD
+        self.password = password
         self.loop = loop
         if loop is None:
             try:
@@ -166,10 +170,10 @@ class RMQClient(RMQBase):
             ...     print(res)
         &#39;&#39;&#39;
         self.connection = await aio_pika.connect(
-            host=RABBITMQ_HOST,
-            port=RABBITMQ_PORT,
-            login=RABBITMQ_USERNAME,
-            password=RABBITMQ_PASSWORD
+            host=self.host,
+            port=self.port,
+            login=self.username,
+            password=self.password,
         )
         self.channel = await self.connection.channel(on_return_raises=True)
         &#39;&#39;&#39;
@@ -408,10 +412,10 @@ class RMQServer(RMQBase):
             raise ValueError(&#34;Connection already exists.&#34;)
         
         self.connection = await aio_pika.connect(
-            host=RABBITMQ_HOST,
-            port=RABBITMQ_PORT,
-            login=RABBITMQ_USERNAME,
-            password=RABBITMQ_PASSWORD
+            host=self.host,
+            port=self.port,
+            login=self.username,
+            password=self.password
         )
 
         for queue_name, serv_obj in self.services.items():
@@ -538,18 +542,22 @@ class RMQServer(RMQBase):
             if RABBITMQ_HOST is None:
                 raise ValueError(&#34;Invalid RabbitMQ host.&#34;)
             host = RABBITMQ_HOST
+        self.host = host
         if port is None:
             if RABBITMQ_PORT is None:
                 raise ValueError(&#34;Invalid RabbitMQ port.&#34;)
             port = RABBITMQ_PORT
+        self.port = port
         if username is None:
             if RABBITMQ_USERNAME is None:
                 raise ValueError(&#34;Invalid RabbitMQ username.&#34;)
             username = RABBITMQ_USERNAME
+        self.username = username
         if password is None:
             if RABBITMQ_PASSWORD is None:
                 raise ValueError(&#34;Invalid RabbitMQ password.&#34;)
             password = RABBITMQ_PASSWORD
+        self.password = password
         self.loop = loop
         if loop is None:
             try:
@@ -692,10 +700,10 @@ class RMQServer(RMQBase):
             ...     print(res)
         &#39;&#39;&#39;
         self.connection = await aio_pika.connect(
-            host=RABBITMQ_HOST,
-            port=RABBITMQ_PORT,
-            login=RABBITMQ_USERNAME,
-            password=RABBITMQ_PASSWORD
+            host=self.host,
+            port=self.port,
+            login=self.username,
+            password=self.password,
         )
         self.channel = await self.connection.channel(on_return_raises=True)
         &#39;&#39;&#39;
@@ -884,10 +892,10 @@ def correlation_id(self) -&gt; str:
         ...     print(res)
     &#39;&#39;&#39;
     self.connection = await aio_pika.connect(
-        host=RABBITMQ_HOST,
-        port=RABBITMQ_PORT,
-        login=RABBITMQ_USERNAME,
-        password=RABBITMQ_PASSWORD
+        host=self.host,
+        port=self.port,
+        login=self.username,
+        password=self.password,
     )
     self.channel = await self.connection.channel(on_return_raises=True)
     &#39;&#39;&#39;
@@ -1186,10 +1194,10 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
             raise ValueError(&#34;Connection already exists.&#34;)
         
         self.connection = await aio_pika.connect(
-            host=RABBITMQ_HOST,
-            port=RABBITMQ_PORT,
-            login=RABBITMQ_USERNAME,
-            password=RABBITMQ_PASSWORD
+            host=self.host,
+            port=self.port,
+            login=self.username,
+            password=self.password
         )
 
         for queue_name, serv_obj in self.services.items():
@@ -1393,10 +1401,10 @@ def add_service(self, func_ptr: Callable[..., Any], queue_size: Optional[int], f
         raise ValueError(&#34;Connection already exists.&#34;)
     
     self.connection = await aio_pika.connect(
-        host=RABBITMQ_HOST,
-        port=RABBITMQ_PORT,
-        login=RABBITMQ_USERNAME,
-        password=RABBITMQ_PASSWORD
+        host=self.host,
+        port=self.port,
+        login=self.username,
+        password=self.password
     )
 
     for queue_name, serv_obj in self.services.items():

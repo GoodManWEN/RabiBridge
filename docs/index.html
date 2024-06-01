@@ -261,10 +261,10 @@ def register_call(
             ...     print(res)
         &#39;&#39;&#39;
         self.connection = await aio_pika.connect(
-            host=RABBITMQ_HOST,
-            port=RABBITMQ_PORT,
-            login=RABBITMQ_USERNAME,
-            password=RABBITMQ_PASSWORD
+            host=self.host,
+            port=self.port,
+            login=self.username,
+            password=self.password,
         )
         self.channel = await self.connection.channel(on_return_raises=True)
         &#39;&#39;&#39;
@@ -453,10 +453,10 @@ def correlation_id(self) -&gt; str:
         ...     print(res)
     &#39;&#39;&#39;
     self.connection = await aio_pika.connect(
-        host=RABBITMQ_HOST,
-        port=RABBITMQ_PORT,
-        login=RABBITMQ_USERNAME,
-        password=RABBITMQ_PASSWORD
+        host=self.host,
+        port=self.port,
+        login=self.username,
+        password=self.password,
     )
     self.channel = await self.connection.channel(on_return_raises=True)
     &#39;&#39;&#39;
@@ -755,10 +755,10 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
             raise ValueError(&#34;Connection already exists.&#34;)
         
         self.connection = await aio_pika.connect(
-            host=RABBITMQ_HOST,
-            port=RABBITMQ_PORT,
-            login=RABBITMQ_USERNAME,
-            password=RABBITMQ_PASSWORD
+            host=self.host,
+            port=self.port,
+            login=self.username,
+            password=self.password
         )
 
         for queue_name, serv_obj in self.services.items():
@@ -962,10 +962,10 @@ def add_service(self, func_ptr: Callable[..., Any], queue_size: Optional[int], f
         raise ValueError(&#34;Connection already exists.&#34;)
     
     self.connection = await aio_pika.connect(
-        host=RABBITMQ_HOST,
-        port=RABBITMQ_PORT,
-        login=RABBITMQ_USERNAME,
-        password=RABBITMQ_PASSWORD
+        host=self.host,
+        port=self.port,
+        login=self.username,
+        password=self.password
     )
 
     for queue_name, serv_obj in self.services.items():
