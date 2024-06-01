@@ -83,9 +83,9 @@ asyncio.run(main())
 
 For the detailed function description, please refer to the [API reference]().
 
-[Production deployment example](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/production_deployment_example.md)
+[Production deployment example](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/blogs/production_deployment_example.md)
 
-[Encryption in configuration file](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/encryption_in_configuration_file.md)
+[Encryption in configuration file](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/blogs/encryption_in_configuration_file.md)
 
 ## Configuration
 
