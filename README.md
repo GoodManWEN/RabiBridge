@@ -81,7 +81,7 @@ asyncio.run(main())
 
 ## Documentation
 
-For the detailed function description, please refer to the [API reference]().
+For the detailed function description, please refer to the [API reference](https://goodmanwen.github.io/RabiBridge/).
 
 [Production deployment example](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/blogs/production_deployment_example.md)
 
