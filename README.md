@@ -1,5 +1,11 @@
 # RabiBridge
 
+[![fury](https://badge.fury.io/py/RabiBridge.svg)](https://badge.fury.io/py/RabiBridge)
+[![licence](https://img.shields.io/github/license/GoodManWEN/RabiBridge)](https://github.com/GoodManWEN/RabiBridge/blob/master/LICENSE)
+[![pyversions](https://img.shields.io/pypi/pyversions/RabiBridge.svg)](https://pypi.org/project/RabiBridge/)
+[![Publish](https://github.com/GoodManWEN/RabiBridge/workflows/Publish/badge.svg)](https://github.com/GoodManWEN/RabiBridge/actions?query=workflow:Publish)
+[![Build](https://github.com/GoodManWEN/RabiBridge/workflows/Build/badge.svg)](https://github.com/GoodManWEN/RabiBridge/actions?query=workflow:Build)
+
 This is a lightweight RPC framework based on RabbitMQ, designed to achieve network service decoupling and traffic peak shaving and protect your backend service. Applicable to FastAPI / aiohttp and other asynchronous frameworks
 
 ## Catalogue
@@ -25,7 +31,9 @@ This is a lightweight RPC framework based on RabbitMQ, designed to achieve netwo
 
 ## Installation
 
-TBD
+```
+pip install RabiBridge
+```
 
 ## Quick Start
 
