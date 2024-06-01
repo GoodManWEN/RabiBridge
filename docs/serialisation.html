@@ -22,32 +22,6 @@
 <h1 class="title">Module <code>rabibridge.serialisation</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from pydantic import validate_call
-from typing import Literal, Any, Callable, Tuple
-
-def get_serialisation_handler(mode: Literal[&#39;json&#39;, &#39;pickle&#39;, &#39;msgpack&#39;]) -&gt; Tuple[Callable[..., bytes], Callable[..., Any]]:
-    &#39;&#39;&#39;
-    Get serialisation handler for different modes, which can be defined in the configuration file.
-
-    Note:
-        Since pickle has serialisation security issues in the python environment, we usually recommend using msgpack. json serialised data is larger in size in comparison. If you use json as a serialisation and deserialisation tool, you can use higher performance implementations such as ujson or orjson. at the same time, another problem with json is that you can&#39;t serialise bytes string directly.
-    &#39;&#39;&#39;
-    if mode == &#39;msgpack&#39;:
-        import msgpack
-        return msgpack.dumps, msgpack.loads
-    elif mode == &#39;pickle&#39;:
-        import pickle
-        return pickle.dumps, pickle.loads
-    elif mode == &#39;json&#39;:
-        import json
-        json_dumps = lambda x: json.dumps(x).encode(&#39;utf-8&#39;)
-        return json_dumps, json.loads
-    </code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -63,28 +37,6 @@ def get_serialisation_handler(mode: Literal[&#39;json&#39;, &#39;pickle&#39;, &#
 <div class="desc"><p>Get serialisation handler for different modes, which can be defined in the configuration file.</p>
 <h2 id="note">Note</h2>
 <p>Since pickle has serialisation security issues in the python environment, we usually recommend using msgpack. json serialised data is larger in size in comparison. If you use json as a serialisation and deserialisation tool, you can use higher performance implementations such as ujson or orjson. at the same time, another problem with json is that you can't serialise bytes string directly.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_serialisation_handler(mode: Literal[&#39;json&#39;, &#39;pickle&#39;, &#39;msgpack&#39;]) -&gt; Tuple[Callable[..., bytes], Callable[..., Any]]:
-    &#39;&#39;&#39;
-    Get serialisation handler for different modes, which can be defined in the configuration file.
-
-    Note:
-        Since pickle has serialisation security issues in the python environment, we usually recommend using msgpack. json serialised data is larger in size in comparison. If you use json as a serialisation and deserialisation tool, you can use higher performance implementations such as ujson or orjson. at the same time, another problem with json is that you can&#39;t serialise bytes string directly.
-    &#39;&#39;&#39;
-    if mode == &#39;msgpack&#39;:
-        import msgpack
-        return msgpack.dumps, msgpack.loads
-    elif mode == &#39;pickle&#39;:
-        import pickle
-        return pickle.dumps, pickle.loads
-    elif mode == &#39;json&#39;:
-        import json
-        json_dumps = lambda x: json.dumps(x).encode(&#39;utf-8&#39;)
-        return json_dumps, json.loads</code></pre>
-</details>
 </dd>
 </dl>
 </section>

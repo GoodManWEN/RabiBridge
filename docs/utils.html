@@ -22,147 +22,6 @@
 <h1 class="title">Module <code>rabibridge.utils</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import os
-import toml
-import sys
-import traceback
-import asyncio
-from types import FunctionType
-from typing import Generator, Tuple, Optional, Any, Callable
-from loguru import logger
-from pydantic import validate_call
-from functools import wraps
-from base64 import b64decode, b64encode
-
-# 切换日志等级到trace
-logger.remove()
-# logger.add(sink=os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), &#39;logs&#39;), rotation=&#39;1 day&#39;, retention=&#39;7 days&#39;, level=&#39;TRACE&#39;))
-logger.add(sys.stdout, level=&#39;TRACE&#39;)
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_BASE_DIR = os.path.dirname(BASE_DIR)
-
-def load_config() -&gt; dict:
-    &#39;&#39;&#39;
-    Args:
-        None
-    
-    Returns:
-        dict: the configuration dictionary.
-
-    Note:
-        The configuration file is located in the `config` folder of the project root directory, named `env.toml`.
-    &#39;&#39;&#39;
-    config_path = os.path.join(os.path.join(BASE_BASE_DIR, &#39;config&#39;), &#39;env.toml&#39;)
-    try:
-        return toml.load(config_path)
-    except:
-        return {}
-
-@validate_call
-def get_config_val(config: dict, k1: str, k2: str) -&gt; Any:
-    return config.get(k1, {}).get(k2, None)
-
-@validate_call
-def decode_pwd(cipher: Optional[str], secret: Optional[str], decrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
-    if cipher is None or secret is None:
-        return None
-    return b64decode(decrypt_function(b64decode(cipher.encode(&#39;utf-8&#39;)), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)
-
-@validate_call
-def encode_pwd(pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
-    if pwd is None or secret is None:
-        return None
-    return b64encode(encrypt_function(pwd.encode(&#39;utf-8&#39;), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)
-
-@validate_call
-def list_main_functions(global_symbols: dict[str, object], banned_names: list[str] = []) -&gt; Generator[Tuple[str, str, object], None, None]:
-    l = []
-    for name, obj in global_symbols.items():
-        if isinstance(obj, FunctionType):
-            if obj.__module__ in [&#39;__main__&#39;, &#39;__mp_main__&#39;]:
-                l.append([name, obj])
-    for name, obj in l:
-        if name not in banned_names:
-            yield name, obj
-
-@validate_call
-def register_call(
-    queue_size: Optional[int] = None, 
-    fetch_size: Optional[int] = None, 
-    timeout: Optional[int] = None,                   # secs
-    *,
-    validate: bool = False,
-    re_register: bool = False,
-):
-    &#39;&#39;&#39;
-    Args:
-        queue_size: what the queue length for this call should be (maximum number of waiting tasks). Default to `None` means no limit. **Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.**
-        fetch_size: fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don&#39;t consume too many system resources under an I/O multiplexing model. However, you generally shouldn&#39;t let your application listen to too many file descriptors at the same time. Typically, maintaining the system&#39;s listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn&#39;t be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting `fetch_size` to a very small value is an effective way to protect the backend service. The default is `None`, which means get all the messages in the current queue in the ready state.
-        timeout: message timeout from the queue. Defaults to `None`. **Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.**
-        validate: whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the `pydantic.validate_call` decorator. Defaults to `False`.
-        re_register: whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to `False`.
-
-    Note:
-        re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.
-    &#39;&#39;&#39;
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            return func(*args, **kwargs)
-        wrapper._schema = {
-            &#39;queue_size&#39;: queue_size,
-            &#39;fetch_size&#39;: fetch_size,
-            &#39;timeout&#39;: timeout * 1000 if timeout is not None else None,
-            &#39;re_register&#39;: re_register,
-            &#39;async&#39;: asyncio.iscoroutinefunction(func)
-        }
-        return wrapper if not validate else validate_call(wrapper)
-    return decorator
-
-
-def trace_exception(e: Exception) -&gt; str:
-    return &#39;&#39;.join(traceback.format_exception(type(e), value=e, tb=e.__traceback__))
-
-
-@validate_call
-def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False):
-    &#39;&#39;&#39;
-    A simple function to help you use the multiprocessing module to expand a copy of a child process in each core. We recommend reading the source code directly if you want to understand the details.
-
-    Args:
-        num_processes: the number of processes to spawn. Input `None` means the number of logical cores.
-        single_process: the function to be executed in each process.
-        bind_core: whether to bind the process to the core. If your number of deployments is equal to the number of cores and your business is under pressure, turning on this option is good for avoiding register overhead due to core switching and can slightly improve performance. Most of the time it is not recommended to turn on. Defaults to `False`.
-    &#39;&#39;&#39;
-    from multiprocessing import Process
-    from psutil import cpu_count
-    from psutil import Process as psutil_Process
-    
-    
-    if num_processes is None:
-        num_processes = cpu_count(logical=True)
-    processes = []
-    for i in range(num_processes):
-        p = Process(target=single_process, args=())
-        processes.append(p)
-        p.start()
-        if bind_core:
-            psp = psutil_Process(p.pid)
-            psp.cpu_affinity([i])
-
-    try:
-        for p in processes:
-            p.join()
-    except KeyboardInterrupt:
-        for p in processes:
-            p.terminate()
-            p.join()</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -176,67 +35,24 @@ def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Call
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@validate_call
-def decode_pwd(cipher: Optional[str], secret: Optional[str], decrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
-    if cipher is None or secret is None:
-        return None
-    return b64decode(decrypt_function(b64decode(cipher.encode(&#39;utf-8&#39;)), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)</code></pre>
-</details>
 </dd>
 <dt id="rabibridge.utils.encode_pwd"><code class="name flex">
 <span>def <span class="ident">encode_pwd</span></span>(<span>pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) ‑> Optional[str]</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@validate_call
-def encode_pwd(pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) -&gt; Optional[str]:
-    if pwd is None or secret is None:
-        return None
-    return b64encode(encrypt_function(pwd.encode(&#39;utf-8&#39;), b64encode(secret.encode(&#39;utf-8&#39;)))).decode(&#39;utf-8&#39;)</code></pre>
-</details>
 </dd>
 <dt id="rabibridge.utils.get_config_val"><code class="name flex">
 <span>def <span class="ident">get_config_val</span></span>(<span>config: dict, k1: str, k2: str) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@validate_call
-def get_config_val(config: dict, k1: str, k2: str) -&gt; Any:
-    return config.get(k1, {}).get(k2, None)</code></pre>
-</details>
 </dd>
 <dt id="rabibridge.utils.list_main_functions"><code class="name flex">
 <span>def <span class="ident">list_main_functions</span></span>(<span>global_symbols: dict[str, object], banned_names: list[str] = []) ‑> Generator[Tuple[str, str, object], None, None]</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@validate_call
-def list_main_functions(global_symbols: dict[str, object], banned_names: list[str] = []) -&gt; Generator[Tuple[str, str, object], None, None]:
-    l = []
-    for name, obj in global_symbols.items():
-        if isinstance(obj, FunctionType):
-            if obj.__module__ in [&#39;__main__&#39;, &#39;__mp_main__&#39;]:
-                l.append([name, obj])
-    for name, obj in l:
-        if name not in banned_names:
-            yield name, obj</code></pre>
-</details>
 </dd>
 <dt id="rabibridge.utils.load_config"><code class="name flex">
 <span>def <span class="ident">load_config</span></span>(<span>) ‑> dict</span>
@@ -251,27 +67,6 @@ def list_main_functions(global_symbols: dict[str, object], banned_names: list[st
 </dl>
 <h2 id="note">Note</h2>
 <p>The configuration file is located in the <code>config</code> folder of the project root directory, named <code>env.toml</code>.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def load_config() -&gt; dict:
-    &#39;&#39;&#39;
-    Args:
-        None
-    
-    Returns:
-        dict: the configuration dictionary.
-
-    Note:
-        The configuration file is located in the `config` folder of the project root directory, named `env.toml`.
-    &#39;&#39;&#39;
-    config_path = os.path.join(os.path.join(BASE_BASE_DIR, &#39;config&#39;), &#39;env.toml&#39;)
-    try:
-        return toml.load(config_path)
-    except:
-        return {}</code></pre>
-</details>
 </dd>
 <dt id="rabibridge.utils.multiprocess_spawn_helper"><code class="name flex">
 <span>def <span class="ident">multiprocess_spawn_helper</span></span>(<span>num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False)</span>
@@ -287,44 +82,6 @@ def list_main_functions(global_symbols: dict[str, object], banned_names: list[st
 <dt><strong><code>bind_core</code></strong></dt>
 <dd>whether to bind the process to the core. If your number of deployments is equal to the number of cores and your business is under pressure, turning on this option is good for avoiding register overhead due to core switching and can slightly improve performance. Most of the time it is not recommended to turn on. Defaults to <code>False</code>.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@validate_call
-def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Callable[..., Any], *, bind_core: Optional[bool] = False):
-    &#39;&#39;&#39;
-    A simple function to help you use the multiprocessing module to expand a copy of a child process in each core. We recommend reading the source code directly if you want to understand the details.
-
-    Args:
-        num_processes: the number of processes to spawn. Input `None` means the number of logical cores.
-        single_process: the function to be executed in each process.
-        bind_core: whether to bind the process to the core. If your number of deployments is equal to the number of cores and your business is under pressure, turning on this option is good for avoiding register overhead due to core switching and can slightly improve performance. Most of the time it is not recommended to turn on. Defaults to `False`.
-    &#39;&#39;&#39;
-    from multiprocessing import Process
-    from psutil import cpu_count
-    from psutil import Process as psutil_Process
-    
-    
-    if num_processes is None:
-        num_processes = cpu_count(logical=True)
-    processes = []
-    for i in range(num_processes):
-        p = Process(target=single_process, args=())
-        processes.append(p)
-        p.start()
-        if bind_core:
-            psp = psutil_Process(p.pid)
-            psp.cpu_affinity([i])
-
-    try:
-        for p in processes:
-            p.join()
-    except KeyboardInterrupt:
-        for p in processes:
-            p.terminate()
-            p.join()</code></pre>
-</details>
 </dd>
 <dt id="rabibridge.utils.register_call"><code class="name flex">
 <span>def <span class="ident">register_call</span></span>(<span>queue_size: Optional[int] = None, fetch_size: Optional[int] = None, timeout: Optional[int] = None, *, validate: bool = False, re_register: bool = False)</span>
@@ -345,57 +102,12 @@ def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Call
 </dl>
 <h2 id="note">Note</h2>
 <p>re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@validate_call
-def register_call(
-    queue_size: Optional[int] = None, 
-    fetch_size: Optional[int] = None, 
-    timeout: Optional[int] = None,                   # secs
-    *,
-    validate: bool = False,
-    re_register: bool = False,
-):
-    &#39;&#39;&#39;
-    Args:
-        queue_size: what the queue length for this call should be (maximum number of waiting tasks). Default to `None` means no limit. **Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.**
-        fetch_size: fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don&#39;t consume too many system resources under an I/O multiplexing model. However, you generally shouldn&#39;t let your application listen to too many file descriptors at the same time. Typically, maintaining the system&#39;s listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn&#39;t be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting `fetch_size` to a very small value is an effective way to protect the backend service. The default is `None`, which means get all the messages in the current queue in the ready state.
-        timeout: message timeout from the queue. Defaults to `None`. **Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.**
-        validate: whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the `pydantic.validate_call` decorator. Defaults to `False`.
-        re_register: whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to `False`.
-
-    Note:
-        re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.
-    &#39;&#39;&#39;
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            return func(*args, **kwargs)
-        wrapper._schema = {
-            &#39;queue_size&#39;: queue_size,
-            &#39;fetch_size&#39;: fetch_size,
-            &#39;timeout&#39;: timeout * 1000 if timeout is not None else None,
-            &#39;re_register&#39;: re_register,
-            &#39;async&#39;: asyncio.iscoroutinefunction(func)
-        }
-        return wrapper if not validate else validate_call(wrapper)
-    return decorator</code></pre>
-</details>
 </dd>
 <dt id="rabibridge.utils.trace_exception"><code class="name flex">
 <span>def <span class="ident">trace_exception</span></span>(<span>e: Exception) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def trace_exception(e: Exception) -&gt; str:
-    return &#39;&#39;.join(traceback.format_exception(type(e), value=e, tb=e.__traceback__))</code></pre>
-</details>
 </dd>
 </dl>
 </section>
