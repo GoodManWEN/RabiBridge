@@ -4,7 +4,7 @@
 [![licence](https://img.shields.io/github/license/GoodManWEN/RabiBridge)](https://github.com/GoodManWEN/RabiBridge/blob/master/LICENSE)
 [![pyversions](https://img.shields.io/pypi/pyversions/RabiBridge.svg)](https://pypi.org/project/RabiBridge/)
 [![Publish](https://github.com/GoodManWEN/RabiBridge/workflows/Publish/badge.svg)](https://github.com/GoodManWEN/RabiBridge/actions?query=workflow:Publish)
-[![Docs](https://github.com/GoodManWEN/RabiBridge/workflows/Docs/badge.svg)](https://github.com/GoodManWEN/RabiBridge/actions?query=workflow:Docs)
+[![Docs](https://github.com/GoodManWEN/RabiBridge/workflows/Docs/badge.svg)](https://goodmanwen.github.io/RabiBridge/)
 
 This is a lightweight RPC framework based on RabbitMQ, designed to achieve network service decoupling and traffic peak shaving and protect your backend service. Applicable to FastAPI / aiohttp and other asynchronous frameworks
 
