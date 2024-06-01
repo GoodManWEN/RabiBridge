@@ -5,7 +5,7 @@ from pipeit import *
 
 proj_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 docs_dir = os.path.join(proj_dir, "docs")
-tmp_dir = os.path.join(proj_dir, "test")
+tmp_dir = os.path.join(proj_dir, "tmp")
 
 def get_html_files(dir_path: str):
     ret = []
