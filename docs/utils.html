@@ -46,7 +46,17 @@ logger.add(sys.stdout, level=&#39;TRACE&#39;)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_BASE_DIR = os.path.dirname(BASE_DIR)
 
-def load_config():
+def load_config() -&gt; dict:
+    &#39;&#39;&#39;
+    Args:
+        None
+    
+    Returns:
+        dict: the configuration dictionary.
+
+    Note:
+        The configuration file is located in the `config` folder of the project root directory, named `env.toml`.
+    &#39;&#39;&#39;
     config_path = os.path.join(os.path.join(BASE_BASE_DIR, &#39;config&#39;), &#39;env.toml&#39;)
     try:
         return toml.load(config_path)
@@ -229,15 +239,33 @@ def list_main_functions(global_symbols: dict[str, object], banned_names: list[st
 </details>
 </dd>
 <dt id="rabibridge.utils.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>)</span>
+<span>def <span class="ident">load_config</span></span>(<span>) ‑> dict</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><h2 id="args">Args</h2>
+<p>None</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>the configuration dictionary.</dd>
+</dl>
+<h2 id="note">Note</h2>
+<p>The configuration file is located in the <code>config</code> folder of the project root directory, named <code>env.toml</code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config():
+<pre><code class="python">def load_config() -&gt; dict:
+    &#39;&#39;&#39;
+    Args:
+        None
+    
+    Returns:
+        dict: the configuration dictionary.
+
+    Note:
+        The configuration file is located in the `config` folder of the project root directory, named `env.toml`.
+    &#39;&#39;&#39;
     config_path = os.path.join(os.path.join(BASE_BASE_DIR, &#39;config&#39;), &#39;env.toml&#39;)
     try:
         return toml.load(config_path)
