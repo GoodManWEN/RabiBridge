@@ -1,4 +1,4 @@
-name: Update static docs
+name: Docs
 
 on:
   push:
@@ -61,14 +61,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Pages
+        if: env.changes == 'true'
         id: pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
+        if: env.changes == 'true'
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./docs
           destination: ./_site
       - name: Upload artifact
+        if: env.changes == 'true'
         uses: actions/upload-pages-artifact@v3
 
   # Deployment job
