@@ -13,7 +13,7 @@ from base64 import b64decode, b64encode
 # 切换日志等级到trace
 logger.remove()
 # logger.add(sink=os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs'), rotation='1 day', retention='7 days', level='TRACE'))
-logger.add(sys.stdout, level='TRACE')
+logger.add(sys.stdout, level='INFO')
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_BASE_DIR = os.path.dirname(BASE_DIR)

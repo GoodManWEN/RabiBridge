@@ -24,7 +24,7 @@ async def update_shared_array(pidx, shared_array, total_counts):
 async def async_thread(bridge, total_counts):
     async with bridge:
         while True:
-            await bridge.try_call_async('func1', timeout=10)
+            await bridge.try_remote_call('func1', timeout=10)
             total_counts[0] += 1
 
 async def process_async(pidx, shared_array, total_counts):

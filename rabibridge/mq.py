@@ -141,7 +141,7 @@ class RMQClient(RMQBase):
             ...     res = await client.remote_call(...)
             ...     print(res)
         '''
-        self.connection = await aio_pika.connect(
+        self.connection = await aio_pika.connect_robust(
             host=self.host,
             port=self.port,
             login=self.username,
@@ -383,7 +383,7 @@ class RMQServer(RMQBase):
         if self.connection is not None:
             raise ValueError("Connection already exists.")
         
-        self.connection = await aio_pika.connect(
+        self.connection = await aio_pika.connect_robust(
             host=self.host,
             port=self.port,
             login=self.username,
