@@ -36,7 +36,7 @@ jobs:
       - name: Generate documentation
         run: |
           mkdir tmp
-          pdoc --html --output-dir tmp rabibridge
+          pdoc --html -c show_source_code=False --output-dir tmp rabibridge
       - name: Run post-greatment script
         run: |
           python3 docs/docs.py
