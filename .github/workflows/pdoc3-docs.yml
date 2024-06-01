@@ -39,7 +39,7 @@ jobs:
           pdoc --html --output-dir tmp rabibridge
       - name: Run post-greatment script
         run: |
-          pdoc --html docs/docs.py
+          python3 docs/docs.py
       - name: Check for changes
         id: check_changes
         run: |
