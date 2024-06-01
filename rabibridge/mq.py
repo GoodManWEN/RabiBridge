@@ -438,16 +438,14 @@ class RMQServer(RMQBase):
                         result = await func_ptr(*args, **kwargs)
                     else:
                         result = func_ptr(*args, **kwargs)       ### TBD: migration to use thread pooling for execution
-                except Exception as e:
-                    call_code = 1
-                    trace_exception(e)
-                if call_code == 0:
                     logger.trace(f"Run result: {result}")
                     ret_body = self._stream_compress([call_code, result])
-                else:
+                except Exception as e:
+                    call_code = 1
                     err_msg = trace_exception(e)
                     logger.debug(f"Run error: {err_msg}")
                     ret_body = self._stream_compress([call_code, err_msg])
+
                 await channel.default_exchange.publish(
                     aio_pika.Message(
                         body=ret_body, 
