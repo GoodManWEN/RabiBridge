@@ -132,11 +132,11 @@ class RMQClient(RMQBase):
         The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.
 
         Args:
-            loop: Event loop in this particular process. Defaults to None.
-            host: RabbitMQ host. Defaults to None.
-            port: RabbitMQ port. Defaults to None.
-            username: RabbitMQ username. Defaults to None.
-            password: RabbitMQ password. Defaults to None.
+            loop: Event loop in this particular process. Defaults to `None`.
+            host: RabbitMQ host. Defaults to `None`.
+            port: RabbitMQ port. Defaults to `None`.
+            username: RabbitMQ username. Defaults to `None`.
+            password: RabbitMQ password. Defaults to `None`.
         &#39;&#39;&#39;
         super().__init__(loop, host, port, username, password)
         random.seed(int.from_bytes(os.urandom(4), &#39;big&#39;))
@@ -210,10 +210,10 @@ class RMQClient(RMQBase):
         &#39;&#39;&#39;
         Args:
             func_name: function name to be called.
-            args: arguments. Defaults to ().
-            kwargs: keyword arguments. Defaults to {}.
+            args: arguments. Defaults to `()`.
+            kwargs: keyword arguments. Defaults to `{}`.
             ftype: function type to be called remotely. e.g. defaults to &#39;async&#39;, and asynchronous call will be made on server side.
-            timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.
+            timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to `None`.
 
         Note:
             The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
@@ -307,11 +307,11 @@ class RMQServer(RMQBase):
         The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.
 
         Args:
-            loop: Event loop in this particular process. Defaults to None.
-            host: RabbitMQ host. Defaults to None.
-            port: RabbitMQ port. Defaults to None.
-            username: RabbitMQ username. Defaults to None.
-            password: RabbitMQ password. Defaults to None.
+            loop: Event loop in this particular process. Defaults to `None`.
+            host: RabbitMQ host. Defaults to `None`.
+            port: RabbitMQ port. Defaults to `None`.
+            username: RabbitMQ username. Defaults to `None`.
+            password: RabbitMQ password. Defaults to `None`.
         &#39;&#39;&#39;
         super().__init__(loop, host, port, username, password)
         self.services: Optional[dict[str, ServiceSchema]] = None
@@ -367,8 +367,8 @@ class RMQServer(RMQBase):
             func_ptr: function pointer.
             queue_size: queue size.
             fetch_size: fetch size.
-            timeout: timeout. Defaults to None.
-            re_register: re-register. Defaults to False.
+            timeout: timeout. Defaults to `None`.
+            re_register: re-register. Defaults to `False`.
             
         &#39;&#39;&#39;
         if not isinstance(func_ptr, FunctionType):
@@ -634,15 +634,15 @@ class RMQServer(RMQBase):
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>loop</code></strong></dt>
-<dd>Event loop in this particular process. Defaults to None.</dd>
+<dd>Event loop in this particular process. Defaults to <code>None</code>.</dd>
 <dt><strong><code>host</code></strong></dt>
-<dd>RabbitMQ host. Defaults to None.</dd>
+<dd>RabbitMQ host. Defaults to <code>None</code>.</dd>
 <dt><strong><code>port</code></strong></dt>
-<dd>RabbitMQ port. Defaults to None.</dd>
+<dd>RabbitMQ port. Defaults to <code>None</code>.</dd>
 <dt><strong><code>username</code></strong></dt>
-<dd>RabbitMQ username. Defaults to None.</dd>
+<dd>RabbitMQ username. Defaults to <code>None</code>.</dd>
 <dt><strong><code>password</code></strong></dt>
-<dd>RabbitMQ password. Defaults to None.</dd>
+<dd>RabbitMQ password. Defaults to <code>None</code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -658,11 +658,11 @@ class RMQServer(RMQBase):
         The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.
 
         Args:
-            loop: Event loop in this particular process. Defaults to None.
-            host: RabbitMQ host. Defaults to None.
-            port: RabbitMQ port. Defaults to None.
-            username: RabbitMQ username. Defaults to None.
-            password: RabbitMQ password. Defaults to None.
+            loop: Event loop in this particular process. Defaults to `None`.
+            host: RabbitMQ host. Defaults to `None`.
+            port: RabbitMQ port. Defaults to `None`.
+            username: RabbitMQ username. Defaults to `None`.
+            password: RabbitMQ password. Defaults to `None`.
         &#39;&#39;&#39;
         super().__init__(loop, host, port, username, password)
         random.seed(int.from_bytes(os.urandom(4), &#39;big&#39;))
@@ -736,10 +736,10 @@ class RMQServer(RMQBase):
         &#39;&#39;&#39;
         Args:
             func_name: function name to be called.
-            args: arguments. Defaults to ().
-            kwargs: keyword arguments. Defaults to {}.
+            args: arguments. Defaults to `()`.
+            kwargs: keyword arguments. Defaults to `{}`.
             ftype: function type to be called remotely. e.g. defaults to &#39;async&#39;, and asynchronous call will be made on server side.
-            timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.
+            timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to `None`.
 
         Note:
             The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
@@ -912,13 +912,13 @@ def correlation_id(self) -&gt; str:
 <dt><strong><code>func_name</code></strong></dt>
 <dd>function name to be called.</dd>
 <dt><strong><code>args</code></strong></dt>
-<dd>arguments. Defaults to ().</dd>
+<dd>arguments. Defaults to <code>()</code>.</dd>
 <dt><strong><code>kwargs</code></strong></dt>
-<dd>keyword arguments. Defaults to {}.</dd>
+<dd>keyword arguments. Defaults to <code>{}</code>.</dd>
 <dt><strong><code>ftype</code></strong></dt>
 <dd>function type to be called remotely. e.g. defaults to 'async', and asynchronous call will be made on server side.</dd>
 <dt><strong><code>timeout</code></strong></dt>
-<dd>Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.</dd>
+<dd>Client timeout time, independent from queue timeout hyper-parameter. Defaults to <code>None</code>.</dd>
 </dl>
 <h2 id="note">Note</h2>
 <p>The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
@@ -952,10 +952,10 @@ This function will uplift errors that may occur during execution:</p>
     &#39;&#39;&#39;
     Args:
         func_name: function name to be called.
-        args: arguments. Defaults to ().
-        kwargs: keyword arguments. Defaults to {}.
+        args: arguments. Defaults to `()`.
+        kwargs: keyword arguments. Defaults to `{}`.
         ftype: function type to be called remotely. e.g. defaults to &#39;async&#39;, and asynchronous call will be made on server side.
-        timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.
+        timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to `None`.
 
     Note:
         The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
@@ -1061,15 +1061,15 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>loop</code></strong></dt>
-<dd>Event loop in this particular process. Defaults to None.</dd>
+<dd>Event loop in this particular process. Defaults to <code>None</code>.</dd>
 <dt><strong><code>host</code></strong></dt>
-<dd>RabbitMQ host. Defaults to None.</dd>
+<dd>RabbitMQ host. Defaults to <code>None</code>.</dd>
 <dt><strong><code>port</code></strong></dt>
-<dd>RabbitMQ port. Defaults to None.</dd>
+<dd>RabbitMQ port. Defaults to <code>None</code>.</dd>
 <dt><strong><code>username</code></strong></dt>
-<dd>RabbitMQ username. Defaults to None.</dd>
+<dd>RabbitMQ username. Defaults to <code>None</code>.</dd>
 <dt><strong><code>password</code></strong></dt>
-<dd>RabbitMQ password. Defaults to None.</dd>
+<dd>RabbitMQ password. Defaults to <code>None</code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -1085,11 +1085,11 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
         The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.
 
         Args:
-            loop: Event loop in this particular process. Defaults to None.
-            host: RabbitMQ host. Defaults to None.
-            port: RabbitMQ port. Defaults to None.
-            username: RabbitMQ username. Defaults to None.
-            password: RabbitMQ password. Defaults to None.
+            loop: Event loop in this particular process. Defaults to `None`.
+            host: RabbitMQ host. Defaults to `None`.
+            port: RabbitMQ port. Defaults to `None`.
+            username: RabbitMQ username. Defaults to `None`.
+            password: RabbitMQ password. Defaults to `None`.
         &#39;&#39;&#39;
         super().__init__(loop, host, port, username, password)
         self.services: Optional[dict[str, ServiceSchema]] = None
@@ -1145,8 +1145,8 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
             func_ptr: function pointer.
             queue_size: queue size.
             fetch_size: fetch size.
-            timeout: timeout. Defaults to None.
-            re_register: re-register. Defaults to False.
+            timeout: timeout. Defaults to `None`.
+            re_register: re-register. Defaults to `False`.
             
         &#39;&#39;&#39;
         if not isinstance(func_ptr, FunctionType):
@@ -1302,9 +1302,9 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
 <dt><strong><code>fetch_size</code></strong></dt>
 <dd>fetch size.</dd>
 <dt><strong><code>timeout</code></strong></dt>
-<dd>timeout. Defaults to None.</dd>
+<dd>timeout. Defaults to <code>None</code>.</dd>
 <dt><strong><code>re_register</code></strong></dt>
-<dd>re-register. Defaults to False.</dd>
+<dd>re-register. Defaults to <code>False</code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -1321,8 +1321,8 @@ def add_service(self, func_ptr: Callable[..., Any], queue_size: Optional[int], f
         func_ptr: function pointer.
         queue_size: queue size.
         fetch_size: fetch size.
-        timeout: timeout. Defaults to None.
-        re_register: re-register. Defaults to False.
+        timeout: timeout. Defaults to `None`.
+        re_register: re-register. Defaults to `False`.
         
     &#39;&#39;&#39;
     if not isinstance(func_ptr, FunctionType):
