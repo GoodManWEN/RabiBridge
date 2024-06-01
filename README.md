@@ -70,8 +70,7 @@ import asyncio
 from rabibridge import RMQClient
 
 async def main():
-    bridge = RMQClient(host="localhost", port=5672, username="admin", password="123456")
-    async with bridge:
+    async with RMQClient(host="localhost", port=5672, username="admin", password="123456") as bridge:
         err_code, result = await bridge.remote_call('fibonacci', (10, ))
         print(f"Result is {result}")
         # >>> Result is 55
@@ -106,6 +105,7 @@ CID_MAX = 1073741824                           # The maximum value of the indepe
                                                # too small or too large.
 COMPRESS_THRESHOLD = 1024                      # Stream compression algorithm will be enabled when 
                                                # the message size exceeds this byte threshold.
+SERIALISER = 'msgpack'                         # Literal['msgpack', 'pickle', 'json']
 
 [secret]
 SECRET = "your secret that no one knows"       # Avoid being known by anyone.
