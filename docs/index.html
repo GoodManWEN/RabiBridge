@@ -26,7 +26,10 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .mq import RMQClient, RMQServer
+<pre><code class="python">__author__ = &#39;WEN (github.com/GoodManWEN)&#39;
+__version__ = &#39;&#39;
+
+from .mq import RMQClient, RMQServer
 from .utils import logger, register_call, multiprocess_spawn_helper
 from .permissions import encrypt_pwd, decrypt_pwd
 from .exceptions import RemoteExecutionError
