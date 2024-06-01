@@ -134,8 +134,8 @@ class RMQClient(RMQBase):
 
         Examples:
             >>> async with RMQClient(...) as client:
-            >>>     res = await client.remote_call(...)
-            >>>     print(res)
+            ...     res = await client.remote_call(...)
+            ...     print(res)
         '''
         self.connection = await aio_pika.connect(
             host=RABBITMQ_HOST,
@@ -181,11 +181,11 @@ class RMQClient(RMQBase):
     ) -> Any:
         '''
         Args:
-            `func_name`: function name to be called.
-            `args`: arguments. Defaults to ().
-            `kwargs`: keyword arguments. Defaults to {}.
-            `ftype`: function type to be called remotely. e.g. defaults to 'async', and asynchronous call will be made on server side.
-            `timeout`: Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.
+            func_name: function name to be called.
+            args: arguments. Defaults to ().
+            kwargs: keyword arguments. Defaults to {}.
+            ftype: function type to be called remotely. e.g. defaults to 'async', and asynchronous call will be made on server side.
+            timeout: Client timeout time, independent from queue timeout hyper-parameter. Defaults to None.
 
         Note:
             The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
@@ -196,9 +196,9 @@ class RMQClient(RMQBase):
 
         Examples:
             >>> try:
-            >>>     res = await client.remote_call(...)
+            ...     res = await client.remote_call(...)
             >>> Except Exceition as e:
-            >>>     ...
+            ...     ...
             
         Returns:
             Any: (result) The result of the remote call.
@@ -279,11 +279,11 @@ class RMQServer(RMQBase):
         The following parameters are used preferentially if they are specified, if they are not specified, the configuration file is searched to use, and an error is reported if they are not in the configuration file either.
 
         Args:
-            `loop`: Event loop in this particular process. Defaults to None.
-            `host`: RabbitMQ host. Defaults to None.
-            `port`: RabbitMQ port. Defaults to None.
-            `username`: RabbitMQ username. Defaults to None.
-            `password`: RabbitMQ password. Defaults to None.
+            loop: Event loop in this particular process. Defaults to None.
+            host: RabbitMQ host. Defaults to None.
+            port: RabbitMQ port. Defaults to None.
+            username: RabbitMQ username. Defaults to None.
+            password: RabbitMQ password. Defaults to None.
         '''
         super().__init__(loop, host, port, username, password)
         self.services: Optional[dict[str, ServiceSchema]] = None
@@ -296,12 +296,12 @@ class RMQServer(RMQBase):
         Automatically captures all registered functions in global space, using which requires that all the specified call has already been registered.
 
         Args:
-            `symbols`: global dict.
+            symbols: global dict.
 
         Examples:
             >>> @register_call(...)
             >>> def call_1():
-            >>>     ...
+            ...     ...
             >>> obj.load_services(globals())
             None # call_1 has been loaded
         '''
@@ -336,11 +336,11 @@ class RMQServer(RMQBase):
         For technical details and meanings of the parameters, please refer to the description in `register_call`.
 
         Args:
-            `func_ptr`: function pointer.
-            `queue_size`: queue size.
-            `fetch_size`: fetch size.
-            `timeout`: timeout. Defaults to None.
-            `re_register`: re-register. Defaults to False.
+            func_ptr: function pointer.
+            queue_size: queue size.
+            fetch_size: fetch size.
+            timeout: timeout. Defaults to None.
+            re_register: re-register. Defaults to False.
             
         '''
         if not isinstance(func_ptr, FunctionType):
@@ -372,7 +372,7 @@ class RMQServer(RMQBase):
             >>> s = RMQServer(...)
             >>> s.load_services(globals())
             >>> async with s:
-            >>>     await server.run_serve()
+            ...     await server.run_serve()
         '''
         if self.services is None:
             raise ValueError("Services not loaded, you must load services first.")

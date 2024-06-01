@@ -63,11 +63,15 @@ def register_call(
 ):
     '''
     Args:
-        `queue_size`: what the queue length for this call should be (maximum number of waiting tasks). Default to None means no limit. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
-        `fetch_size`: fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don't consume too many system resources under an I/O multiplexing model. However, you generally shouldn't let your application listen to too many file descriptors at the same time. Typically, maintaining the system's listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn't be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting `fetch_size` to a very small value is an effective way to protect the backend service. 
-        `timeout`: message timeout from the queue. Defaults to None. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
-        `validate`: whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the pydantic.validate_call decorator. Defaults to False.
-        `re_register`: whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to False.
+        queue_size: what the queue length for this call should be (maximum number of waiting tasks). Default to None means no limit. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+
+        fetch_size: fetch size. You need to set a reasonable value to achieve maximum performance. Although for I/O-bound tasks, as more waiting does not open more connections, they usually don't consume too many system resources under an I/O multiplexing model. However, you generally shouldn't let your application listen to too many file descriptors at the same time. Typically, maintaining the system's listening file descriptors in the range of a few hundred to a few thousand is the key to ensuring efficiency. These file descriptors can ideally be assumed to be evenly distributed across different processes, with each process evenly distributed across different calls. From this, you can infer an appropriate value for this parameter to set, which usually shouldn't be too small or too large. Of course, if your business puts significant pressure on the backend, say a complex SQL search, limiting `fetch_size` to a very small value is an effective way to protect the backend service. 
+
+        timeout: message timeout from the queue. Defaults to None. *Changing this parameter affects the persistence settings in rabbitmq, so it needs to be redeclared.*
+
+        validate: whether to force constraints on the type legitimacy of input parameters when a remote call occurs, a wrapper for the pydantic.validate_call decorator. Defaults to False.
+
+        re_register: whether to remove the hyperparameter in rabbitmq that the queue has been persisted and redeclare. Defaults to False.
 
     Note:
         re_register should not be used in multiprocessing mode, where reclaim will cause other worker disconeected.
