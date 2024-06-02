@@ -376,21 +376,24 @@ class RMQServer(RMQBase):
             if re_register is None:
                 re_register = re_register_1
         
-        add_obj = {
-            'queue_name': queue_name, 
-            'queue_obj': None,
-            'channel_obj': None,
-            'func_ptr': func_ptr, 
-            'queue_size': queue_size, 
-            'fetch_size': fetch_size,
-            'timeout': timeout,
-            're_register': re_register,
-            'is_async': is_async,
-            'anchor_file': func_ptr._co_filename  # self defined value
-        }
-        self.services[queue_name] = add_obj
-        logger.info(f"Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. At {func_ptr}")
-        return add_obj
+        if queue_name not in self.services:
+            add_obj = {
+                'queue_name': queue_name, 
+                'queue_obj': None,
+                'channel_obj': None,
+                'func_ptr': func_ptr, 
+                'queue_size': queue_size, 
+                'fetch_size': fetch_size,
+                'timeout': timeout,
+                're_register': re_register,
+                'is_async': is_async,
+                'anchor_file': func_ptr._co_filename  # self defined value
+            }
+            self.services[queue_name] = add_obj
+            logger.info(f"Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. At {func_ptr}")
+            return add_obj
+        else:
+            return self.services[queue_name]
 
     @validate_call
     def load_plugins(self, plugin_dir: Union[Path, str]) -> None:
@@ -426,11 +429,14 @@ class RMQServer(RMQBase):
                     continue
 
     async def _unplug_offline_plugins(self):
+        
         if self.plugin_dir is None:
             raise ValueError("Plugin directory should be already specified to run this method.")
         
         _pop_list = []
         for service, service_schema in self.services.items():
+            if service_schema['func_ptr'].__module__ == '__main__':
+                continue
             identity = f"{service_schema['anchor_file']}: {service_schema['queue_name']}"
             if identity not in self._valid_plugins:
                 _pop_list.append(service)
@@ -471,7 +477,8 @@ class RMQServer(RMQBase):
     
     async def _create_coroutines(self) -> None:
         for queue_name, serv_obj in self.services.items():
-            queue_name, queue_obj, channel_obj, func_ptr, queue_size, fetch_size, timeout, re_register, is_async, anchor_file = serv_obj.values()
+            queue_name, queue_obj, channel_obj, func_ptr, queue_size, fetch_size, timeout, re_register, is_async, _ = serv_obj.values()
+
             if queue_obj is None or channel_obj is None:
                 # channel
                 channel_obj: AbstractChannel = await self.connection.channel()
@@ -501,6 +508,7 @@ class RMQServer(RMQBase):
                 queue_obj = await channel_obj.declare_queue(name=queue_name, durable=True, arguments=args)
                 await queue_obj.bind(exchange, routing_key=queue_name[4:])
                 self.services[queue_name]['queue_obj'] = queue_obj
+                self.services[queue_name]['channel_obj'] = channel_obj
             self._srv_coros.append(self._queue_listen_handler(queue_name, queue_obj, func_ptr, channel_obj, is_async_function=is_async))
 
     async def _call_handler(self, queue_name: str, message: AbstractIncomingMessage, func_ptr: Callable, func_signature: inspect.Signature, channel: AbstractChannel, is_async_function: bool):
@@ -563,6 +571,9 @@ class RMQServer(RMQBase):
 
         Args:
             reload: whether to reload the service on file changes. Defaults to `False`. **You need to explicitly call `load_plugins()` first to enable this option**
+
+        Note:
+            Repeated loading and unloading in the current version can lead to memory leaks.
         '''
         if reload == True and self.plugin_dir is None:
             raise ValueError("Plugin directory should be already specified to run this method.")
@@ -581,6 +592,7 @@ class RMQServer(RMQBase):
                 self._srv_coros.clear()
                 await self._create_coroutines()
                 logger.info('Reloaded services.')
+                
             except Exception as e:
                 raise e
             if not reload:
