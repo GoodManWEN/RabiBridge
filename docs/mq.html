@@ -183,7 +183,7 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
 <h3>Methods</h3>
 <dl>
 <dt id="rabibridge.mq.RMQServer.add_service"><code class="name flex">
-<span>def <span class="ident">add_service</span></span>(<span>self, func_ptr: Callable[..., Any], queue_size: Optional[int], fetch_size: Optional[int], timeout: Optional[int] = None, re_register: bool = False)</span>
+<span>def <span class="ident">add_service</span></span>(<span>self, func_ptr: Callable[..., Any], queue_size: Optional[int] = None, fetch_size: Optional[int] = None, timeout: Optional[int] = None, re_register: bool = False) ‑> <a title="rabibridge.models.ServiceSchema" href="models.html#rabibridge.models.ServiceSchema">ServiceSchema</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>If you do not wish to use automatic capture, you can register the service manually. Manually registered services do not need to be pre-registered using the <code>recister_call</code> decorator.</p>
@@ -220,6 +220,17 @@ While err_code means if the call run smoothly on remote side, 0 for success, 1 f
 ...     await server.run_serve()
 </code></pre></div>
 </dd>
+<dt id="rabibridge.mq.RMQServer.load_plugins"><code class="name flex">
+<span>def <span class="ident">load_plugins</span></span>(<span>self, plugin_dir: Union[pathlib.Path, str]) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Load services from a specified directory, the directory should contain python files that have been registered with the <code>register_call</code> decorator.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>plugin_dir</code></strong></dt>
+<dd>plugin directory.</dd>
+</dl></div>
+</dd>
 <dt id="rabibridge.mq.RMQServer.load_services"><code class="name flex">
 <span>def <span class="ident">load_services</span></span>(<span>self, symbols: dict[str, object]) ‑> None</span>
 </code></dt>
@@ -239,10 +250,15 @@ None # call_1 has been loaded
 </code></pre></div>
 </dd>
 <dt id="rabibridge.mq.RMQServer.run_serve"><code class="name flex">
-<span>async def <span class="ident">run_serve</span></span>(<span>self)</span>
+<span>async def <span class="ident">run_serve</span></span>(<span>self, *, reload: bool = False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Start the service, the program will block once called.</p></div>
+<div class="desc"><p>Start the service, the program will block once called.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>reload</code></strong></dt>
+<dd>whether to reload the service on file changes. Defaults to <code>False</code>. <strong>You need to explicitly call <code>load_plugins()</code> first to enable this option</strong></dd>
+</dl></div>
 </dd>
 </dl>
 </dd>
@@ -281,10 +297,11 @@ None # call_1 has been loaded
 </li>
 <li>
 <h4><code><a title="rabibridge.mq.RMQServer" href="#rabibridge.mq.RMQServer">RMQServer</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="rabibridge.mq.RMQServer.add_service" href="#rabibridge.mq.RMQServer.add_service">add_service</a></code></li>
 <li><code><a title="rabibridge.mq.RMQServer.close" href="#rabibridge.mq.RMQServer.close">close</a></code></li>
 <li><code><a title="rabibridge.mq.RMQServer.connect" href="#rabibridge.mq.RMQServer.connect">connect</a></code></li>
+<li><code><a title="rabibridge.mq.RMQServer.load_plugins" href="#rabibridge.mq.RMQServer.load_plugins">load_plugins</a></code></li>
 <li><code><a title="rabibridge.mq.RMQServer.load_services" href="#rabibridge.mq.RMQServer.load_services">load_services</a></code></li>
 <li><code><a title="rabibridge.mq.RMQServer.run_serve" href="#rabibridge.mq.RMQServer.run_serve">run_serve</a></code></li>
 </ul>

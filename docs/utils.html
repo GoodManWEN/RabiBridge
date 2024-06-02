@@ -36,6 +36,19 @@
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="rabibridge.utils.dynamic_load_module"><code class="name flex">
+<span>def <span class="ident">dynamic_load_module</span></span>(<span>file_path: pathlib.Path)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file_path</code></strong></dt>
+<dd>the file path of the module.</dd>
+</dl>
+<h2 id="note">Note</h2>
+<p>This function is used to dynamically load a module and execute it. The module name is the same as the file name without the suffix. The module is loaded into the <code>sys.modules</code> dictionary.</p>
+<p>This function should <strong>NOT</strong> be called explicitly by the user, but the user should ensure that the plugin filename can be legally registered and does not duplicate existing libraries.</p></div>
+</dd>
 <dt id="rabibridge.utils.encode_pwd"><code class="name flex">
 <span>def <span class="ident">encode_pwd</span></span>(<span>pwd: Optional[str], secret: Optional[str], encrypt_function: Callable[[bytes, bytes], bytes]) ‑> Optional[str]</span>
 </code></dt>
@@ -128,6 +141,7 @@
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="rabibridge.utils.decode_pwd" href="#rabibridge.utils.decode_pwd">decode_pwd</a></code></li>
+<li><code><a title="rabibridge.utils.dynamic_load_module" href="#rabibridge.utils.dynamic_load_module">dynamic_load_module</a></code></li>
 <li><code><a title="rabibridge.utils.encode_pwd" href="#rabibridge.utils.encode_pwd">encode_pwd</a></code></li>
 <li><code><a title="rabibridge.utils.get_config_val" href="#rabibridge.utils.get_config_val">get_config_val</a></code></li>
 <li><code><a title="rabibridge.utils.list_main_functions" href="#rabibridge.utils.list_main_functions">list_main_functions</a></code></li>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>rabibridge.exceptions API documentation</title>
+<title>rabibridge.store API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>rabibridge.exceptions</code></h1>
+<h1 class="title">Module <code>rabibridge.store</code></h1>
 </header>
 <section id="section-intro">
 </section>
@@ -28,33 +28,91 @@
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="rabibridge.store.resolve_dependencies"><code class="name flex">
+<span>def <span class="ident">resolve_dependencies</span></span>(<span>args: tuple, kwargs: dict, signature: inspect.Signature, store_obj: <a title="rabibridge.store.Store" href="#rabibridge.store.Store">Store</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="rabibridge.exceptions.FileChangedException"><code class="flex name class">
-<span>class <span class="ident">FileChangedException</span></span>
-<span>(</span><span>*args, **kwargs)</span>
+<dt id="rabibridge.store.Store"><code class="flex name class">
+<span>class <span class="ident">Store</span></span>
+<span>(</span><span>**kwargs: Any)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Raised when the file has been changed.</p></div>
+<div class="desc"><p>Usage docs: <a href="https://docs.pydantic.dev/2.7/concepts/models/">https://docs.pydantic.dev/2.7/concepts/models/</a></p>
+<p>A base class for creating Pydantic models.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of classvars defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The signature for instantiating the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The pydantic-core schema used to build the SchemaValidator and SchemaSerializer.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>Metadata for generic models; contains data used for a similar purpose to
+<strong>args</strong>, <strong>origin</strong>, <strong>parameters</strong> in typing-module generics. May eventually be replaced by these.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a <code>RootModel</code>.</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The pydantic-core SchemaSerializer used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The pydantic-core SchemaValidator used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>An instance attribute with the values of extra fields from validation when
+<code>model_config['extra'] == 'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>An instance attribute with the names of fields explicitly set.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Instance attribute with the values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
+<li>pydantic.main.BaseModel</li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="rabibridge.store.Store.extra_fields"><code class="name">var <span class="ident">extra_fields</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
 </dd>
-<dt id="rabibridge.exceptions.RemoteExecutionError"><code class="flex name class">
-<span>class <span class="ident">RemoteExecutionError</span></span>
-<span>(</span><span>*args, **kwargs)</span>
-</code></dt>
+<dt id="rabibridge.store.Store.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
 <dd>
-<div class="desc"><p>Raised when an exception occurs during remote execution.</p></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
+<div class="desc"></div>
+</dd>
+<dt id="rabibridge.store.Store.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="rabibridge.store.Store.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 </dd>
 </dl>
 </section>
@@ -70,13 +128,21 @@
 <li><code><a title="rabibridge" href="index.html">rabibridge</a></code></li>
 </ul>
 </li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="rabibridge.store.resolve_dependencies" href="#rabibridge.store.resolve_dependencies">resolve_dependencies</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="rabibridge.exceptions.FileChangedException" href="#rabibridge.exceptions.FileChangedException">FileChangedException</a></code></h4>
-</li>
-<li>
-<h4><code><a title="rabibridge.exceptions.RemoteExecutionError" href="#rabibridge.exceptions.RemoteExecutionError">RemoteExecutionError</a></code></h4>
+<h4><code><a title="rabibridge.store.Store" href="#rabibridge.store.Store">Store</a></code></h4>
+<ul class="">
+<li><code><a title="rabibridge.store.Store.extra_fields" href="#rabibridge.store.Store.extra_fields">extra_fields</a></code></li>
+<li><code><a title="rabibridge.store.Store.model_computed_fields" href="#rabibridge.store.Store.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="rabibridge.store.Store.model_config" href="#rabibridge.store.Store.model_config">model_config</a></code></li>
+<li><code><a title="rabibridge.store.Store.model_fields" href="#rabibridge.store.Store.model_fields">model_fields</a></code></li>
+</ul>
 </li>
 </ul>
 </li>
