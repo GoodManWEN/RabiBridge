@@ -2,17 +2,21 @@ import asyncio
 import aio_pika
 import random
 import os
+import inspect
 import zstandard as zstd
-from aio_pika.abc import AbstractChannel, AbstractIncomingMessage
+from aio_pika.abc import AbstractChannel, AbstractIncomingMessage, AbstractQueue
 from types import FunctionType
-from typing import Optional, Literal, Any, Callable, Tuple
+from typing import Optional, Literal, Any, Callable, Tuple, Union
 from pydantic import validate_call
+from pathlib import Path
+from watchfiles import awatch
 
-from .utils import logger, trace_exception, load_config, get_config_val, list_main_functions
+from .utils import logger, trace_exception, load_config, get_config_val, list_main_functions, dynamic_load_module
 from .serialisation import get_serialisation_handler
 from .permissions import decrypt_pwd
 from .models import ServiceSchema
-from .exceptions import RemoteExecutionError
+from .exceptions import RemoteExecutionError, FileChangedException
+from .store import Store, resolve_dependencies
 
 CONFIG = load_config()
 RABBITMQ_HOST: Optional[str] = get_config_val(CONFIG, "rabbitmq", "RABBITMQ_HOST")
@@ -293,6 +297,9 @@ class RMQServer(RMQBase):
         self.services: Optional[dict[str, ServiceSchema]] = None
         self.channels: list[AbstractChannel] = []
         self._srv_coros = []
+        self.store = Store()
+        self.plugin_dir: Optional[Path] = None
+        self._valid_plugins: set[str] = set()
 
     @validate_call
     def load_services(self, symbols: dict[str, object]) -> None:
@@ -317,23 +324,24 @@ class RMQServer(RMQBase):
                 # queue_size, fetch_size, timeout, re_register, is_async = None, None, None, False, asyncio.iscoroutinefunction(ptr)
             else:
                 queue_size, fetch_size, timeout, re_register, is_async = schema.values()
-            if queue_size is not None and fetch_size is not None:
-                assert fetch_size <= queue_size # have to be true
+
             queue_name = f"rpc_{'async' if is_async else 'sync'}_{name}"
             self.services[queue_name] = {
                 'queue_name': queue_name, 
                 'queue_obj': None,
+                'channel_obj': None,
                 'func_ptr': ptr, 
                 'queue_size': queue_size, 
                 'fetch_size': fetch_size,
                 'timeout': timeout,
                 're_register': re_register,
-                'is_async': is_async
+                'is_async': is_async,
+                'anchor_file': ptr._co_filename
             }
             logger.info(f"Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. {ptr}")
 
     @validate_call
-    def add_service(self, func_ptr: Callable[..., Any], queue_size: Optional[int], fetch_size: Optional[int], timeout: Optional[int] = None, re_register: bool = False):
+    def add_service(self, func_ptr: Callable[..., Any], queue_size: Optional[int] = None, fetch_size: Optional[int] = None, timeout: Optional[int] = None, re_register: bool = False) -> ServiceSchema:
         '''
         If you do not wish to use automatic capture, you can register the service manually. Manually registered services do not need to be pre-registered using the `recister_call` decorator.
 
@@ -349,24 +357,91 @@ class RMQServer(RMQBase):
         '''
         if not isinstance(func_ptr, FunctionType):
             raise ValueError("func_ptr must be a function pointer.")
-        label = 'sync'
-        if asyncio.iscoroutinefunction(func_ptr):
-            label = 'async'
-        queue_name = f"rpc_{label}_{func_ptr.__name__}"
-        if queue_size is not None and fetch_size is not None:
-            assert fetch_size <= queue_size # have to be true
         if self.services is None:
             self.services = {}
-        self.services[queue_name] = {
+        
+        is_async = False
+        if asyncio.iscoroutinefunction(func_ptr):
+            is_async = True
+        queue_name = f"rpc_{'async' if is_async else 'sync'}_{func_ptr.__name__}"
+        schema = getattr(func_ptr, '_schema', None)
+        if schema is not None: 
+            queue_size_1, fetch_size_1, timeout_1, re_register_1, _ = schema.values()
+            if queue_size is None:
+                queue_size = queue_size_1
+            if fetch_size is None:
+                fetch_size = fetch_size_1
+            if timeout is None:
+                timeout = timeout_1
+            if re_register is None:
+                re_register = re_register_1
+        
+        add_obj = {
             'queue_name': queue_name, 
             'queue_obj': None,
+            'channel_obj': None,
             'func_ptr': func_ptr, 
             'queue_size': queue_size, 
             'fetch_size': fetch_size,
             'timeout': timeout,
-            're_register': re_register
+            're_register': re_register,
+            'is_async': is_async,
+            'anchor_file': func_ptr._co_filename  # self defined value
         }
-        logger.info(f"Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. {func_ptr}")
+        self.services[queue_name] = add_obj
+        logger.info(f"Service {queue_name} loaded. queue_size: {queue_size}, fetch_size: {fetch_size}. At {func_ptr}")
+        return add_obj
+
+    @validate_call
+    def load_plugins(self, plugin_dir: Union[Path, str]) -> None:
+        '''
+        Load services from a specified directory, the directory should contain python files that have been registered with the `register_call` decorator.
+        
+        Args:
+            plugin_dir: plugin directory.
+        '''
+        if self.services is None:
+            self.services = {}
+        if isinstance(plugin_dir, str):
+            plugin_dir = Path(plugin_dir)
+        plugin_dir = plugin_dir.resolve()
+        self.plugin_dir = plugin_dir
+        self._valid_plugins.clear()
+        if not plugin_dir.exists():
+            raise ValueError("Plugin directory does not exist.")
+        for file in plugin_dir.iterdir():
+            if not file.is_file():
+                continue
+            if file.suffix == '.py' and file.stem.startswith('plugin'):
+                try:
+                    module = dynamic_load_module(file)
+                    functions = inspect.getmembers(module, inspect.isfunction)
+                    for _, func_ptr in functions:
+                        _schema = getattr(func_ptr, '_schema', None)
+                        if _schema is not None:
+                            add_obj = self.add_service(func_ptr)
+                            self._valid_plugins.add(f"{add_obj['anchor_file']}: {add_obj['queue_name']}")
+                except Exception as e:
+                    logger.warning(f"Load plugin error: {type(e)}: {e}")
+                    continue
+
+    async def _unplug_offline_plugins(self):
+        if self.plugin_dir is None:
+            raise ValueError("Plugin directory should be already specified to run this method.")
+        
+        _pop_list = []
+        for service, service_schema in self.services.items():
+            identity = f"{service_schema['anchor_file']}: {service_schema['queue_name']}"
+            if identity not in self._valid_plugins:
+                _pop_list.append(service)
+        
+        for service in _pop_list:
+            try:
+                service_schema = self.services.pop(service)
+                await service_schema['channel_obj'].close()
+            except:
+                continue
+            logger.info(f"Service {service} has been unplugged. {service_schema}")
 
     async def connect(self) -> "RMQServer":
         '''
@@ -390,50 +465,55 @@ class RMQServer(RMQBase):
             password=self.password
         )
 
-        for queue_name, serv_obj in self.services.items():
-            queue_name, _, func_ptr, queue_size, fetch_size, timeout, re_register, is_async = serv_obj.values()
-            # channel
-            channel: AbstractChannel = await self.connection.channel()
-            if fetch_size is not None:
-                await channel.set_qos(prefetch_count=fetch_size)
-            self.channels.append(channel)
-            exchange = await channel.declare_exchange(
-                name='rpc',
-                type=aio_pika.ExchangeType.DIRECT,
-                durable=True
-            )
-
-            # queue
-            args = {'x-overflow': 'reject-publish'}
-            if timeout is not None:
-                args['x-message-ttl'] = timeout
-            if queue_size is not None:
-                args['x-max-length'] = queue_size
-            if re_register:
-                try:
-                    await channel.declare_queue(name=queue_name, durable=True, arguments=args, passive=True)
-                    await channel.queue_delete(queue_name)
-                    logger.trace(f"Queue {queue_name} exist, former one deleted.")
-                except aio_pika.exceptions.ChannelClosed:
-                    # queue does not exist
-                    logger.trace(f"Queue {queue_name} does not exist.")
-            queue = await channel.declare_queue(name=queue_name, durable=True, arguments=args)
-            await queue.bind(exchange, routing_key=queue_name[4:])
-            self.services[queue_name]['queue_obj'] = queue 
-            self._srv_coros.append(self._queue_listen_handler(queue, func_ptr, channel, is_async_function=is_async))
+        await self._create_coroutines()
             
         return self
     
+    async def _create_coroutines(self) -> None:
+        for queue_name, serv_obj in self.services.items():
+            queue_name, queue_obj, channel_obj, func_ptr, queue_size, fetch_size, timeout, re_register, is_async, anchor_file = serv_obj.values()
+            if queue_obj is None or channel_obj is None:
+                # channel
+                channel_obj: AbstractChannel = await self.connection.channel()
+                if fetch_size is not None:
+                    await channel_obj.set_qos(prefetch_count=fetch_size)
+                self.channels.append(channel_obj)
+                exchange = await channel_obj.declare_exchange(
+                    name='rpc',
+                    type=aio_pika.ExchangeType.DIRECT,
+                    durable=True
+                )
 
-    async def _call_handler(self, message: AbstractIncomingMessage, func_ptr: callable, channel: AbstractChannel, is_async_function: bool):
+                # queue
+                args = {'x-overflow': 'reject-publish'}
+                if timeout is not None:
+                    args['x-message-ttl'] = timeout
+                if queue_size is not None:
+                    args['x-max-length'] = queue_size
+                if re_register:
+                    try:
+                        await channel_obj.declare_queue(name=queue_name, durable=True, arguments=args, passive=True)
+                        await channel_obj.queue_delete(queue_name)
+                        logger.trace(f"Queue {queue_name} exist, former one deleted.")
+                    except aio_pika.exceptions.ChannelClosed:
+                        # queue does not exist
+                        logger.trace(f"Queue {queue_name} does not exist.")
+                queue_obj = await channel_obj.declare_queue(name=queue_name, durable=True, arguments=args)
+                await queue_obj.bind(exchange, routing_key=queue_name[4:])
+                self.services[queue_name]['queue_obj'] = queue_obj
+            self._srv_coros.append(self._queue_listen_handler(queue_name, queue_obj, func_ptr, channel_obj, is_async_function=is_async))
+
+    async def _call_handler(self, queue_name: str, message: AbstractIncomingMessage, func_ptr: Callable, func_signature: inspect.Signature, channel: AbstractChannel, is_async_function: bool):
         try:
             async with message.process():
                 if message.reply_to is None:
                     raise ValueError("Reply_to queue is None")
                 args, kwargs = self._stream_decompress(message.body)
-                logger.debug(f"Received message: {args}, {kwargs}, cid: {message.correlation_id}, reply_to: {message.reply_to}")
+                # logger.trace(f"Received message: {args}, {kwargs}, cid: {message.correlation_id}, reply_to: {message.reply_to}")
+                logger.info(f"Received call: {queue_name}, reply_to: {message.reply_to}, cid: {message.correlation_id}")
                 call_code: int = 0 
                 try:
+                    args, kwargs = resolve_dependencies(args, kwargs, func_signature, self.store)
                     if is_async_function:
                         result = await func_ptr(*args, **kwargs)
                     else:
@@ -453,27 +533,63 @@ class RMQServer(RMQBase):
                     ),
                     routing_key=message.reply_to
                 )
-                logger.trace(f"Sent result: {result}, cid: {message.correlation_id}")
+                if call_code == 0:
+                    logger.trace(f"Sent result: {result}, cid: {message.correlation_id}")
+                else:
+                    logger.trace(f"Sent error: {err_msg}, cid: {message.correlation_id}")
         except Exception as e:
             if DEBUG_MODE:
                 raise e
             logger.error(trace_exception(e))
 
-    async def _queue_listen_handler(self, queue: aio_pika.Queue, func_ptr: callable, channel: AbstractChannel, is_async_function: bool):
-        logger.info('start listening')  
+    async def _queue_listen_handler(self, queue_name: str, queue: aio_pika.Queue, func_ptr: callable, channel: AbstractChannel, is_async_function: bool):
+        logger.info(f'Start listening {queue_name}')  
+        func_signature: inspect.Signature = inspect.signature(func_ptr)
         async with queue.iterator() as qiterator:
             async for message in qiterator: # message: AbstractIncomingMessage
-                self.loop.create_task(self._call_handler(message, func_ptr, channel, is_async_function))
+                self.loop.create_task(self._call_handler(queue_name, message, func_ptr, func_signature, channel, is_async_function))
 
-    async def run_serve(self):
+    async def _file_event_watcher(self, path: Path):
+        async for change in awatch(path):
+            evt, cpath = change.pop()
+            if Path(cpath).parent != self.plugin_dir:
+                continue
+            raise FileChangedException(f'File event: {evt}, {cpath}')
+            
+
+    async def run_serve(self, *, reload: bool = False):
         '''
         Start the service, the program will block once called.
+
+        Args:
+            reload: whether to reload the service on file changes. Defaults to `False`. **You need to explicitly call `load_plugins()` first to enable this option**
         '''
-        logger.info('start serving...')
-        await asyncio.gather(*self._srv_coros)
+        if reload == True and self.plugin_dir is None:
+            raise ValueError("Plugin directory should be already specified to run this method.")
+        
+        pid = os.getpid()
+        logger.info(f'Start serving at pid: {pid}...')
+        while True:
+            if reload:
+                self._srv_coros.append(self._file_event_watcher(self.plugin_dir))
+            try:
+                await asyncio.gather(*self._srv_coros) # Once gather is interrupted by an exception, one of the tasks will be set to the done state
+            except FileChangedException as fce:
+                logger.info(f'File changed captured: {fce}')
+                self.load_plugins(self.plugin_dir)
+                await self._unplug_offline_plugins()
+                self._srv_coros.clear()
+                await self._create_coroutines()
+                logger.info('Reloaded services.')
+            except Exception as e:
+                raise e
+            if not reload:
+                break
+            # else 
+            
   
     async def close(self):
-        logger.info('closing...')
+        logger.info('Closing...')
         if self.connection is not None:
             await self.connection.close()
 

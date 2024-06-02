@@ -3,12 +3,14 @@ import toml
 import sys
 import traceback
 import asyncio
+import importlib
 from types import FunctionType
 from typing import Generator, Tuple, Optional, Any, Callable
 from loguru import logger
 from pydantic import validate_call
 from functools import wraps
 from base64 import b64decode, b64encode
+from pathlib import Path
 
 # 切换日志等级到trace
 logger.remove()
@@ -91,8 +93,9 @@ def register_call(
             'fetch_size': fetch_size,
             'timeout': timeout * 1000 if timeout is not None else None,
             're_register': re_register,
-            'async': asyncio.iscoroutinefunction(func)
+            'is_async': asyncio.iscoroutinefunction(func)
         }
+        wrapper._co_filename = func.__code__.co_filename
         return wrapper if not validate else validate_call(wrapper)
     return decorator
 
@@ -134,3 +137,37 @@ def multiprocess_spawn_helper(num_processes: Optional[int], single_process: Call
         for p in processes:
             p.terminate()
             p.join()
+
+
+def dynamic_load_module(file_path: Path):
+    '''
+    Args:
+        file_path: the file path of the module.
+
+    Note:
+        This function is used to dynamically load a module and execute it. The module name is the same as the file name without the suffix. The module is loaded into the `sys.modules` dictionary.
+
+        This function should **NOT** be called explicitly by the user, but the user should ensure that the plugin filename can be legally registered and does not duplicate existing libraries.
+    '''
+    module_name = file_path.stem            # 
+    spec = importlib.util.spec_from_file_location(module_name, file_path)
+    if spec is None:
+        raise ImportError(f"Unable to load module {module_name}, please check if the file path {file_path} is correct")
+    
+    # Create a new module
+    module = importlib.util.module_from_spec(spec)
+
+    # Add the module to sys.modules
+    sys.modules[module_name] = module
+
+    # Execute the code of the module
+    try:
+        spec.loader.exec_module(module)
+    except Exception as e:
+        raise e
+
+    return module
+
+if __name__ == '__main__':
+    print()
+    dynamic_load_module(Path(r'C:\Users\WEN\Downloads\RabiBridge\config\test2.py'))
