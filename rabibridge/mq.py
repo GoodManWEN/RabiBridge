@@ -363,10 +363,9 @@ class RMQServer(RMQBase):
         is_async = False
         if asyncio.iscoroutinefunction(func_ptr):
             is_async = True
-        queue_name = f"rpc_{'async' if is_async else 'sync'}_{func_ptr.__name__}"
         schema = getattr(func_ptr, '_schema', None)
         if schema is not None: 
-            queue_size_1, fetch_size_1, timeout_1, re_register_1, _ = schema.values()
+            queue_size_1, fetch_size_1, timeout_1, re_register_1, is_async = schema.values()
             if queue_size is None:
                 queue_size = queue_size_1
             if fetch_size is None:
@@ -376,6 +375,7 @@ class RMQServer(RMQBase):
             if re_register is None:
                 re_register = re_register_1
         
+        queue_name = f"rpc_{'async' if is_async else 'sync'}_{func_ptr.__name__}"
         if queue_name not in self.services:
             add_obj = {
                 'queue_name': queue_name, 
