@@ -4,7 +4,7 @@ import random
 import os
 import inspect
 import zstandard as zstd
-from aio_pika.abc import AbstractChannel, AbstractIncomingMessage, AbstractQueue
+from aio_pika.abc import AbstractRobustChannel, AbstractIncomingMessage, AbstractQueue
 from types import FunctionType
 from typing import Optional, Literal, Any, Callable, Tuple, Union
 from pydantic import validate_call
@@ -200,7 +200,7 @@ class RMQClient(RMQBase):
             This is due to the loose coupling of front-end and back-end in rabbitmq, and the timeout cancellation mechanism can not be controlled by the publisher, active cancellation is not easy to realize.
             This function will uplift errors that may occur during execution:
 
-            This function raises errors that may occur during execution, possible errors are: call queue is full (aio_pika.Basic.Nack), call timeout (asyncio.TimeoutError), remote execution error (rabibridge.RemoteExecutionError).
+            This function raises errors that may occur during execution, possible errors are: call queue is full (aio_pika.Basic.Nack), no route (aiormq.exceptions.PublishError), call timeout (asyncio.TimeoutError), remote execution error (rabibridge.RemoteExecutionError).
 
         Examples:
             >>> try:
@@ -211,13 +211,11 @@ class RMQClient(RMQBase):
         Returns:
             Any: (result) The result of the remote call.
         '''
-
         # res_future = self.loop.create_future() # may cause future belongs to a different loop error under some particular engine implementation. Currently don't know reason.
         res_future = asyncio.Future()
         correlation_id = self.correlation_id
         self.result_futures[correlation_id] = res_future
         body: bytes = self._stream_compress([args, kwargs])
-
         logger.trace(f"Call async: {func_name}, {args}, {kwargs}, cid: {correlation_id}, sent body: {body}, routing_key: {ftype}_{func_name}")
         try:
             await self.exchange.publish(
@@ -229,6 +227,7 @@ class RMQClient(RMQBase):
                 routing_key=f"{ftype}_{func_name}",
                 mandatory=True
             )
+            
         except Exception as e: # Basic.Nack
             del self.result_futures[correlation_id]
             raise e
@@ -295,7 +294,7 @@ class RMQServer(RMQBase):
         '''
         super().__init__(loop, host, port, username, password)
         self.services: Optional[dict[str, ServiceSchema]] = None
-        self.channels: list[AbstractChannel] = []
+        self.channels: list[AbstractRobustChannel] = []
         self._srv_coros = []
         self.store = Store()
         self.plugin_dir: Optional[Path] = None
@@ -481,7 +480,7 @@ class RMQServer(RMQBase):
 
             if queue_obj is None or channel_obj is None:
                 # channel
-                channel_obj: AbstractChannel = await self.connection.channel()
+                channel_obj: AbstractRobustChannel = await self.connection.channel()
                 if fetch_size is not None:
                     await channel_obj.set_qos(prefetch_count=fetch_size)
                 self.channels.append(channel_obj)
@@ -499,19 +498,19 @@ class RMQServer(RMQBase):
                     args['x-max-length'] = queue_size
                 if re_register:
                     try:
-                        await channel_obj.declare_queue(name=queue_name, durable=True, arguments=args, passive=True)
+                        await channel_obj.declare_queue(name=queue_name, durable=True, arguments=args, passive=True, auto_delete=True)
                         await channel_obj.queue_delete(queue_name)
                         logger.trace(f"Queue {queue_name} exist, former one deleted.")
                     except aio_pika.exceptions.ChannelClosed:
                         # queue does not exist
                         logger.trace(f"Queue {queue_name} does not exist.")
-                queue_obj = await channel_obj.declare_queue(name=queue_name, durable=True, arguments=args)
+                queue_obj = await channel_obj.declare_queue(name=queue_name, durable=True, arguments=args, auto_delete=True)
                 await queue_obj.bind(exchange, routing_key=queue_name[4:])
                 self.services[queue_name]['queue_obj'] = queue_obj
                 self.services[queue_name]['channel_obj'] = channel_obj
             self._srv_coros.append(self._queue_listen_handler(queue_name, queue_obj, func_ptr, channel_obj, is_async_function=is_async))
 
-    async def _call_handler(self, queue_name: str, message: AbstractIncomingMessage, func_ptr: Callable, func_signature: inspect.Signature, channel: AbstractChannel, is_async_function: bool):
+    async def _call_handler(self, queue_name: str, message: AbstractIncomingMessage, func_ptr: Callable, func_signature: inspect.Signature, channel: AbstractRobustChannel, is_async_function: bool):
         try:
             async with message.process():
                 if message.reply_to is None:
@@ -550,7 +549,7 @@ class RMQServer(RMQBase):
                 raise e
             logger.error(trace_exception(e))
 
-    async def _queue_listen_handler(self, queue_name: str, queue: aio_pika.Queue, func_ptr: callable, channel: AbstractChannel, is_async_function: bool):
+    async def _queue_listen_handler(self, queue_name: str, queue: aio_pika.Queue, func_ptr: callable, channel: AbstractRobustChannel, is_async_function: bool):
         logger.info(f'Start listening {queue_name}')  
         func_signature: inspect.Signature = inspect.signature(func_ptr)
         async with queue.iterator() as qiterator:
