@@ -244,7 +244,7 @@ class RMQClient(RMQBase):
             logger.trace(f"Result: {err_code}: {res}, cid: {correlation_id}")
             if err_code == 1:
                 raise RemoteExecutionError(res)
-            return res
+            return err_code, res
         
     async def try_remote_call(
         self, 
