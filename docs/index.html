@@ -172,7 +172,7 @@
 <p>The timeout setting is recommended to be consistent with the timeout of the back-end service, if not, there may be a situation where the front-end has already timed out but the back-end still continues to execute the task.
 This is due to the loose coupling of front-end and back-end in rabbitmq, and the timeout cancellation mechanism can not be controlled by the publisher, active cancellation is not easy to realize.
 This function will uplift errors that may occur during execution:</p>
-<p>This function raises errors that may occur during execution, possible errors are: call queue is full (aio_pika.Basic.Nack), call timeout (asyncio.TimeoutError), remote execution error (rabibridge.RemoteExecutionError).</p>
+<p>This function raises errors that may occur during execution, possible errors are: call queue is full (aio_pika.Basic.Nack), no route (aiormq.exceptions.PublishError), call timeout (asyncio.TimeoutError), remote execution error (rabibridge.RemoteExecutionError).</p>
 <h2 id="examples">Examples</h2>
 <pre><code class="language-python-repl">&gt;&gt;&gt; try:
 ...     res = await client.remote_call(...)
