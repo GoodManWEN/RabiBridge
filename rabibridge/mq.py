@@ -2,6 +2,7 @@ import asyncio
 import aio_pika
 import random
 import os
+import sys
 import inspect
 import zstandard as zstd
 from aio_pika.abc import AbstractRobustChannel, AbstractIncomingMessage, AbstractQueue
@@ -27,11 +28,19 @@ CID_MAX: Optional[int] = get_config_val(CONFIG, "app", "CID_MAX")
 COMPRESS_THRESHOLD: Optional[int] = get_config_val(CONFIG, "app", "COMPRESS_THRESHOLD")
 DEBUG_MODE: Optional[bool] = get_config_val(CONFIG, "app", "DEBUG_MODE")
 SERIALISER: Optional[str] = get_config_val(CONFIG, "app", "SERIALISER")
+LOG_LEVEL: Optional[str] = get_config_val(CONFIG, "app", "LOG_LEVEL")
 
 if SERIALISER is None:
     SERIALISER = 'msgpack'
 
+if LOG_LEVEL is None:
+    LOG_LEVEL = 'INFO'
+if DEBUG_MODE:
+    LOG_LEVEL = 'TRACE'
+
 serialisation_dumps, serialisation_loads = get_serialisation_handler(SERIALISER)
+
+logger.add(sys.stdout, level=LOG_LEVEL)
 
 
 class RMQBase:
