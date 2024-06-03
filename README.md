@@ -97,6 +97,8 @@ For the detailed function description, please refer to the [API reference](https
 
 [Encryption in configuration file](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/blogs/encryption_in_configuration_file.md)
 
+[Description of the plugin system](https://github.com/GoodManWEN/RabiBridge/blob/main/docs/blogs/description_of_the_plugin_system.md)
+
 ## Configuration
 
 For production and other needs,  to achieve higher convenience and stronger security, it is recommended to use configuration files instead of passing parameters. The configuration file options are as follows:
@@ -109,6 +111,7 @@ RABBITMQ_USERNAME = "admin"
 RABBITMQ_PASSWORD = "fMgmG7+ooAYLjXdPnhInjQ==" # AES Encrypted, check "Encryption in configuration file"
 
 [app]
+LOG_LEVEL = 'INFO'
 DEBUG_MODE = false                             # Whether to run in Debug mode.
 CID_MAX = 1073741824                           # The maximum value of the independent ID assigned by 
                                                # the client for each message, which should not be 

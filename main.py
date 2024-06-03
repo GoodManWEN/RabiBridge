@@ -1,4 +1,4 @@
-from rabibridge import RMQServer, register_call, multiprocess_spawn_helper
+from rabibridge import RMQServer, register_call, multiprocess_spawn_helper, logger
 import asyncio
 import os
 try:
@@ -13,6 +13,7 @@ async def process_async():
     s = RMQServer()
     s.load_services(globals())
     s.load_plugins(os.path.join(base_dir, 'plugins'))
+    s.store.logger = logger
     async with s:
         await s.run_serve(reload=True)
 
