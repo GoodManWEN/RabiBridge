@@ -1,7 +1,7 @@
 uvicorn==0.30.0
 fastapi==0.111.0
 zstandard==0.22.0
-aio_pik==9.4.1
+aio_pika==9.4.1
 psutil==5.9.8
 loguru==0.7.2
 pipeit>=0.3.4
